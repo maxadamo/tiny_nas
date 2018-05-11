@@ -6,7 +6,7 @@ group <%= @csync_group %> {
 <% end -%>
     key /etc/csync2_<%= @csync_group %>-group.key;
 <% @csync_dir.each do |include_dir| -%>
-    include <%= @include_dir %>;
+    include <%= include_dir %>;
 <% end -%>
 
     exclude *~ .*;

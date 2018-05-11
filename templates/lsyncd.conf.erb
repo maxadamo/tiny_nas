@@ -94,7 +94,7 @@ initSync = {
 
 local sources = {
 <% @csync_dir.each do |include_dir| -%>
-    ["<%= @include_dir %>"] = "<%= @csync_group %>"
+    ["<%= include_dir %>"] = "<%= @csync_group %>"
 <% end -%>
 }
 for key, value in pairs(sources) do
