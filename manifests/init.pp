@@ -14,11 +14,31 @@
 # and store them to hiera or store as templates
 #
 class lsync_csync2 (
-  Array $csync_pkgs = $::lsync_csync2::params::csync_pkgs,
+  String $csync_group          = $::lsync_csync2::params::csync_group,
+  String $csync_dir            = $::lsync_csync2::params::csync_dir,
+  String $csync2_ssl_key       = $::lsync_csync2::params::csync2_ssl_key,
+  String $csync2_ssl_cert      = $::lsync_csync2::params::csync2_ssl_cert,
+  String $csync2_preshared_key = $::lsync_csync2::params::csync2_preshared_key,
+  Array $csync_pkgs            = $::lsync_csync2::params::csync_pkgs,
+  Array $nodes_hosts           = $::lsync_csync2::params::nodes_hosts,
+  Array $nodes_ip4             = $::lsync_csync2::params::nodes_ip4,
+  Array $nodes_ip6             = $::lsync_csync2::params::nodes_ip6
   ) inherits lsync_csync2::params {
 
-  include csync2::service
-  include csync2::files
+  class { 'csync2::service':
+    nodes_ip4 => $nodes_ip4,
+    nodes_ip6 => $nodes_ip6;
+  }
+
+  class { 'csync2::files':
+    csync_group          => $csync_group,
+    csync_dir            => $csync_dir,
+    csync2_ssl_key       => $csync2_ssl_key,
+    csync2_ssl_cert      => $csync2_ssl_cert,
+    csync2_preshared_key => $csync2_preshared_key,
+    csync_pkgs           => $csync_pkgs,
+    nodes_hosts          => $nodes_hosts
+  }
 
   package { $csync_pkgs: ensure => present; }
 

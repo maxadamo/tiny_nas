@@ -7,7 +7,7 @@ class lsync_csync2::files (
   String $csync2_ssl_cert      = $::lsync_csync2::params::csync2_ssl_cert,
   String $csync2_preshared_key = $::lsync_csync2::params::csync2_preshared_key,
   Array $csync_pkgs            = $::lsync_csync2::params::csync_pkgs,
-  Array $nodes_hosts          = $::lsync_csync2::params::nodes_hosts
+  Array $nodes_hosts           = $::lsync_csync2::params::nodes_hosts
   ) inherits lsync_csync2::params {
 
   file {
