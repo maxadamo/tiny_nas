@@ -2,7 +2,7 @@
 #
 class lsync_csync2::files (
   String $csync_group          = $::lsync_csync2::params::csync_group,
-  String $csync_dir            = $::lsync_csync2::params::csync_dir,
+  Array  $csync_dir            = $::lsync_csync2::params::csync_dir,
   String $csync2_ssl_key       = $::lsync_csync2::params::csync2_ssl_key,
   String $csync2_ssl_cert      = $::lsync_csync2::params::csync2_ssl_cert,
   String $csync2_preshared_key = $::lsync_csync2::params::csync2_preshared_key,
