@@ -25,12 +25,12 @@ class lsync_csync2 (
   Array $nodes_ip6             = $::lsync_csync2::params::nodes_ip6
   ) inherits lsync_csync2::params {
 
-  class { 'csync2::service':
+  class { 'lsync_csync2::service':
     nodes_ip4 => $nodes_ip4,
     nodes_ip6 => $nodes_ip6;
   }
 
-  class { 'csync2::files':
+  class { 'lsync_csync2::files':
     csync_group          => $csync_group,
     csync_dir            => $csync_dir,
     csync2_ssl_key       => $csync2_ssl_key,
