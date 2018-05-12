@@ -14,6 +14,9 @@ class lsync_csync2::params {
   $csync2_ssl_cert = undef
   $csync2_preshared_key = undef
   $lsyncd_packages = ['lsyncd']
-  $csync_packages = ['sqlite', 'csync2']
+  $csync_packages = $::osfamily ? {
+    'Debian' => ['libsqlite3-0', 'csync2'],
+    'RedHat' => ['sqlite', 'csync2']
+  }
 
 }

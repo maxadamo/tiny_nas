@@ -33,7 +33,7 @@ class lsync_csync2::service (
     enable     => true,
     hasrestart => true,
     hasstatus  => true,
-    require    => Package['lsyncd'];
+    require    => Package[$lsyncd_packages];
   }
 
 }

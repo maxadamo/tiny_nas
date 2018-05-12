@@ -100,6 +100,9 @@ class lsync_csync2 (
   }
 
   class {
+    'lsync_csync2::firewall':
+      nodes_ip4 => $nodes_ip4,
+      nodes_ip6 => $nodes_ip6;
     'lsync_csync2::service':
       lsyncd_packages => $lsyncd_packages,
       nodes_ip4       => $nodes_ip4,
