@@ -1,6 +1,7 @@
 # == Class: lsyncd_csync2::service
 #
 class lsyncd_csync2::service (
+  $use_lsyncd,
   $lsyncd_packages,
   $nodes_ip4,
   $nodes_ip6 = []
@@ -28,12 +29,22 @@ class lsyncd_csync2::service (
     per_source     => 'UNLIMITED';
   }
 
-  service { 'lsyncd':
-    ensure     => running,
-    enable     => true,
-    hasrestart => true,
-    hasstatus  => true,
-    require    => Package[$lsyncd_packages];
+  if any2bool($use_lsyncd) == true {
+    service { 'lsyncd':
+      ensure     => running,
+      enable     => true,
+      hasrestart => true,
+      hasstatus  => true,
+      require    => Package[$lsyncd_packages];
+    }
+  } else {
+    service { 'lsyncd':
+      ensure     => stopped,
+      enable     => false,
+      hasrestart => true,
+      hasstatus  => true,
+      require    => Package[$lsyncd_packages];
+    }
   }
 
 }

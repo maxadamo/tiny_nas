@@ -39,7 +39,7 @@ class lsyncd_csync2::files (
   }
 
   # work-around for centos 7
-  exec { 'create_sqlite/_link':
+  exec { 'create_sqlite_link':
     command => 'ln -sf /usr/lib64/libsqlite3.so.0.8.6 /usr/lib64/libsqlite3.so',
     path    => '/usr/bin:/usr/sbin:/bin',
     creates => '/usr/lib64/libsqlite3.so',

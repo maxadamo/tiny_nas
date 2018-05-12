@@ -48,10 +48,11 @@ class { 'lsyncd_csync2':
 }
 ```
 
-If you use templates for the keys:
+If you use templates for the keys and you want to disable directory watching:
 
 ```puppet
 class { 'lsyncd_csync2':
+  use_lsyncd           => false,
   sync_group           => 'puppet_ca',
   sync_dir             => ['/etc/puppetlabs/puppet/ssl'],
   nodes_hostname       => ['puppet02.domain.org', 'puppet03.domain.org'],

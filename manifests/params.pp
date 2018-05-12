@@ -4,6 +4,7 @@
 #
 class lsyncd_csync2::params {
 
+  $use_lsyncd = true
   $nodes_ip4 = []
   $nodes_ip6 = []
   $node_hostname = []

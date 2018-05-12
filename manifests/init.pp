@@ -8,6 +8,12 @@
 #
 # === Parameters & Variables
 #
+# [*use_lsyncd*] <Bool>
+#   default: true (
+#            enable/disable directory watching.
+#            When disable csync2 must be triggered manually.
+#            ). Optional
+#
 # [*nodes_ip4*] <Array>
 #   default: empty (list of servers IPv4). Mandatory.
 #
@@ -28,10 +34,11 @@
 #            (list of directories to exclude from synchronization). Optional.
 #
 # [*csync2_ssl_key*] <String>
-#   default: undef
-#            (ssl key: it can be the content of the key as a variable or
+#   default: undef (
+#            ssl key: it can be the content of the key as a variable or
 #            something like template('mymodule/ssl_key'.
-#            see file README.md to learn how to generate one). Mandatory.
+#            see file README.md to learn how to generate one
+#            ). Mandatory.
 #
 # [*csync2_ssl_cert*] <String>
 #   default: undef (ssl cert: similar to csync2_ssl_key). Mandatory.
@@ -68,6 +75,7 @@
 # Copyright 2018 Massimiliano Adamo, unless otherwise noted.
 #
 class lsyncd_csync2 (
+  Bool $use_lsyncd             = $::lsyncd_csync2::params::use_lsyncd,
   String $sync_group           = $::lsyncd_csync2::params::sync_group,
   Array $sync_dir              = $::lsyncd_csync2::params::sync_dir,
   Array $sync_exclude          = $::lsyncd_csync2::params::sync_exclude,
@@ -104,6 +112,7 @@ class lsyncd_csync2 (
       nodes_ip4 => $nodes_ip4,
       nodes_ip6 => $nodes_ip6;
     'lsyncd_csync2::service':
+      use_lsyncd      => $use_lsyncd,
       lsyncd_packages => $lsyncd_packages,
       nodes_ip4       => $nodes_ip4,
       nodes_ip6       => $nodes_ip6;
