@@ -11,7 +11,7 @@ group <%= @sync_group %> {
 <% end -%>
 
 <% @sync_exclude.each do |exclude_dir| -%>
-    include <%= exclude_dir %>;
+    exclude <%= exclude_dir %>;
 <% end -%>
 
     backup-directory /var/log/csync2/sync-conflicts/;
