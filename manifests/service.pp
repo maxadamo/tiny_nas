@@ -1,6 +1,6 @@
-# == Class: lsync_csync2::service
+# == Class: lsyncd_csync2::service
 #
-class lsync_csync2::service (
+class lsyncd_csync2::service (
   $lsyncd_packages,
   $nodes_ip4,
   $nodes_ip6 = []

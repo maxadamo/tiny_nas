@@ -1,8 +1,8 @@
-# == Class: lsync_csync2::params
+# == Class: lsyncd_csync2::params
 #
 # (see file init.pp for variables explanation )
 #
-class lsync_csync2::params {
+class lsyncd_csync2::params {
 
   $nodes_ip4 = []
   $nodes_ip6 = []

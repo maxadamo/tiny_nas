@@ -1,4 +1,4 @@
-# == Class: lsync_csync2
+# == Class: lsyncd_csync2
 #
 # Setup remote directory synchronization with Lscynd and Csync2
 #
@@ -67,19 +67,19 @@
 #
 # Copyright 2018 Massimiliano Adamo, unless otherwise noted.
 #
-class lsync_csync2 (
-  String $sync_group           = $::lsync_csync2::params::sync_group,
-  Array $sync_dir              = $::lsync_csync2::params::sync_dir,
-  Array $sync_exclude          = $::lsync_csync2::params::sync_exclude,
-  String $csync2_ssl_key       = $::lsync_csync2::params::csync2_ssl_key,
-  String $csync2_ssl_cert      = $::lsync_csync2::params::csync2_ssl_cert,
-  String $csync2_preshared_key = $::lsync_csync2::params::csync2_preshared_key,
-  Array $lsyncd_packages       = $::lsync_csync2::params::lsyncd_packages,
-  Array $csync_packages        = $::lsync_csync2::params::csync_packages,
-  Array $nodes_hostname        = $::lsync_csync2::params::nodes_hostname,
-  Array $nodes_ip4             = $::lsync_csync2::params::nodes_ip4,
-  Array $nodes_ip6             = $::lsync_csync2::params::nodes_ip6
-  ) inherits lsync_csync2::params {
+class lsyncd_csync2 (
+  String $sync_group           = $::lsyncd_csync2::params::sync_group,
+  Array $sync_dir              = $::lsyncd_csync2::params::sync_dir,
+  Array $sync_exclude          = $::lsyncd_csync2::params::sync_exclude,
+  String $csync2_ssl_key       = $::lsyncd_csync2::params::csync2_ssl_key,
+  String $csync2_ssl_cert      = $::lsyncd_csync2::params::csync2_ssl_cert,
+  String $csync2_preshared_key = $::lsyncd_csync2::params::csync2_preshared_key,
+  Array $lsyncd_packages       = $::lsyncd_csync2::params::lsyncd_packages,
+  Array $csync_packages        = $::lsyncd_csync2::params::csync_packages,
+  Array $nodes_hostname        = $::lsyncd_csync2::params::nodes_hostname,
+  Array $nodes_ip4             = $::lsyncd_csync2::params::nodes_ip4,
+  Array $nodes_ip6             = $::lsyncd_csync2::params::nodes_ip6
+  ) inherits lsyncd_csync2::params {
 
   if empty($nodes_hostname) {
     fail('please provide values for the array $nodes_hostname')
@@ -100,14 +100,14 @@ class lsync_csync2 (
   }
 
   class {
-    'lsync_csync2::firewall':
+    'lsyncd_csync2::firewall':
       nodes_ip4 => $nodes_ip4,
       nodes_ip6 => $nodes_ip6;
-    'lsync_csync2::service':
+    'lsyncd_csync2::service':
       lsyncd_packages => $lsyncd_packages,
       nodes_ip4       => $nodes_ip4,
       nodes_ip6       => $nodes_ip6;
-    'lsync_csync2::files':
+    'lsyncd_csync2::files':
       sync_group           => $sync_group,
       sync_dir             => $sync_dir,
       sync_exclude         => $sync_exclude,

@@ -1,6 +1,6 @@
-# == Class: lsync_csync2::firewall
+# == Class: lsyncd_csync2::firewall
 #
-class lsync_csync2::firewall (
+class lsyncd_csync2::firewall (
   $nodes_ip4,
   $nodes_ip6 = []
   ) {
