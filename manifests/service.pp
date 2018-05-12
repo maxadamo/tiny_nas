@@ -37,14 +37,6 @@ class lsyncd_csync2::service (
       hasstatus  => true,
       require    => Package[$lsyncd_packages];
     }
-  } else {
-    service { 'lsyncd':
-      ensure     => stopped,
-      enable     => false,
-      hasrestart => true,
-      hasstatus  => true,
-      require    => Package[$lsyncd_packages];
-    }
   }
 
 }

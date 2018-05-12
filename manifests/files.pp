@@ -1,6 +1,7 @@
 # == Class: lsyncd_csync2::files
 #
 class lsyncd_csync2::files (
+  $use_lsyncd,
   $nodes_hostname,
   $sync_dir,
   $csync2_ssl_key,
@@ -12,16 +13,23 @@ class lsyncd_csync2::files (
   $sync_group      = $::lsyncd_csync2::params::sync_group,
   ) inherits lsyncd_csync2::params {
 
-  $all_packages = concat($csync_packages, $lsyncd_packages)
+  if any2bool($use_lsyncd) == true {
+    $all_packages = concat($csync_packages, $lsyncd_packages)
+    $lsyncd_conf = file
+  } else {
+    $all_packages = $csync_packages
+    $lsyncd_conf = absent
+  }
 
   file {
     default:
       ensure  => file,
       owner   => root,
       group   => root,
-      require => Package[$csync_packages],
+      require => Package[$all_packages],
       before  => Xinetd::Service['csync2'];
     '/etc/lsyncd.conf':
+      ensure  => $lsyncd_conf,
       notify  => Service['lsyncd'],
       content => template("${module_name}/lsyncd.conf.erb");
     "/etc/csync2_${sync_group}.cfg":

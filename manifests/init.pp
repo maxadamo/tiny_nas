@@ -117,6 +117,7 @@ class lsyncd_csync2 (
       nodes_ip4       => $nodes_ip4,
       nodes_ip6       => $nodes_ip6;
     'lsyncd_csync2::files':
+      use_lsyncd           => $use_lsyncd,
       sync_group           => $sync_group,
       sync_dir             => $sync_dir,
       sync_exclude         => $sync_exclude,
@@ -128,7 +129,19 @@ class lsyncd_csync2 (
       nodes_hostname       => $nodes_hostname
   }
 
-  $all_packages = concat($csync_packages, $lsyncd_packages)
+  if any2bool($use_lsyncd) == true {
+    $all_packages = concat($csync_packages, $lsyncd_packages)
+  } else {
+    $all_packages = $csync_packages
+    $lsyncd_packages.each | String $lsyncd_package | {
+      unless defined(Package[$lsyncd_package]) {
+        package { $lsyncd_package:
+          ensure => installed;
+        }
+      }
+    }
+  }
+
   $all_packages.each | String $sync_package | {
     unless defined(Package[$sync_package]) {
       package { $sync_package:
