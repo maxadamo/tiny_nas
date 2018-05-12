@@ -2,7 +2,7 @@
 #
 # Setup remote directory synchronization with Lscynd and Csync2
 #
-# == Quick Overview and Examples
+# == Quick Overview
 #
 # (see file README.md )
 #
@@ -43,6 +43,30 @@
 #   default: ['sqlite', 'csync2', 'lsyncd'] 
 #            (csync_packages: packages to install). Optional
 #
+# Examples
+# --------
+#
+# class { 'lsyncd_csync2':
+#   sync_group           => 'puppet_ca',
+#   sync_dir             => ['/etc/puppetlabs/puppet/ssl'],
+#   nodes_hostname       => ['puppet02.domain.org', 'puppet03.domain.org'],
+#   nodes_ip4            => ['192.168.0.10', '192.168.0.11'],
+#   nodes_ip6            => ['2001:798:3::56', '2001:798:3::54'],
+#   csync2_ssl_key       => lookup('csync2_ssl_key'),
+#   csync2_ssl_cert      => lookup('csync2_ssl_cert'),
+#   csync2_preshared_key => lookup('csync2_preshared_key');
+# }
+#
+# Authors
+# -------
+#
+# Massimiliano Adamo <maxadamo@gmail.com>
+#
+# Copyright
+# ---------
+#
+# Copyright 2018 Massimiliano Adamo, unless otherwise noted.
+#
 class lsync_csync2 (
   String $sync_group           = $::lsync_csync2::params::sync_group,
   Array $sync_dir              = $::lsync_csync2::params::sync_dir,
@@ -50,6 +74,7 @@ class lsync_csync2 (
   String $csync2_ssl_key       = $::lsync_csync2::params::csync2_ssl_key,
   String $csync2_ssl_cert      = $::lsync_csync2::params::csync2_ssl_cert,
   String $csync2_preshared_key = $::lsync_csync2::params::csync2_preshared_key,
+  Array $lsyncd_packages       = $::lsync_csync2::params::lsyncd_packages,
   Array $csync_packages        = $::lsync_csync2::params::csync_packages,
   Array $nodes_hostname        = $::lsync_csync2::params::nodes_hostname,
   Array $nodes_ip4             = $::lsync_csync2::params::nodes_ip4,
@@ -76,8 +101,9 @@ class lsync_csync2 (
 
   class {
     'lsync_csync2::service':
-      nodes_ip4 => $nodes_ip4,
-      nodes_ip6 => $nodes_ip6;
+      lsyncd_packages => $lsyncd_packages,
+      nodes_ip4       => $nodes_ip4,
+      nodes_ip6       => $nodes_ip6;
     'lsync_csync2::files':
       sync_group           => $sync_group,
       sync_dir             => $sync_dir,
@@ -86,12 +112,14 @@ class lsync_csync2 (
       csync2_ssl_cert      => $csync2_ssl_cert,
       csync2_preshared_key => $csync2_preshared_key,
       csync_packages       => $csync_packages,
+      lsyncd_packages      => $lsyncd_packages,
       nodes_hostname       => $nodes_hostname
   }
 
-  $csync_packages.each | String $csync_package | {
-    unless defined(Package[$csync_package]) {
-      package { $csync_package:
+  $all_packages = concat($csync_packages, $lsyncd_packages)
+  $all_packages.each | String $sync_package | {
+    unless defined(Package[$sync_package]) {
+      package { $sync_package:
         ensure => installed;
       }
     }

@@ -1,15 +1,18 @@
 # == Class: lsync_csync2::files
 #
 class lsync_csync2::files (
-  $sync_group           = $::lsync_csync2::params::sync_group,
-  $sync_dir             = $::lsync_csync2::params::sync_dir,
-  $sync_exclude         = $::lsync_csync2::params::sync_exclude,
-  $csync2_ssl_key       = $::lsync_csync2::params::csync2_ssl_key,
-  $csync2_ssl_cert      = $::lsync_csync2::params::csync2_ssl_cert,
-  $csync2_preshared_key = $::lsync_csync2::params::csync2_preshared_key,
-  $csync_packages       = $::lsync_csync2::params::csync_packages,
-  $nodes_hostname       = $::lsync_csync2::params::nodes_hostname
+  $nodes_hostname,
+  $sync_dir,
+  $csync2_ssl_key,
+  $csync2_ssl_cert,
+  $csync2_preshared_key,
+  $sync_exclude    = $::lsync_csync2::params::sync_exclude,
+  $csync_packages  = $::lsync_csync2::params::csync_packages,
+  $lsyncd_packages = $::lsync_csync2::params::lsyncd_packages,
+  $sync_group      = $::lsync_csync2::params::sync_group,
   ) inherits lsync_csync2::params {
+
+  $all_packages = concat($csync_packages, $lsyncd_packages)
 
   file {
     default:

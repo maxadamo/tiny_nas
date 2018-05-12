@@ -13,6 +13,7 @@ class lsync_csync2::params {
   $csync2_ssl_key = undef
   $csync2_ssl_cert = undef
   $csync2_preshared_key = undef
-  $csync_packages = ['sqlite', 'csync2', 'lsyncd']
+  $lsyncd_packages = ['lsyncd']
+  $csync_packages = ['sqlite', 'csync2']
 
 }

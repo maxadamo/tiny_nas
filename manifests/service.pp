@@ -1,9 +1,10 @@
 # == Class: lsync_csync2::service
 #
 class lsync_csync2::service (
-  $nodes_ip4  = $::lsync_csync2::params::nodes_ip4,
-  $nodes_ip6  = $::lsync_csync2::params::nodes_ip6,
-  ) inherits lsync_csync2::params {
+  $lsyncd_packages,
+  $nodes_ip4,
+  $nodes_ip6 = []
+  ) {
 
   $nodes_ips = concat($nodes_ip4, $nodes_ip6, '127.0.0.1')
   $_only_from = delete($nodes_ips, [$::ipadress, $::ipadress6])
