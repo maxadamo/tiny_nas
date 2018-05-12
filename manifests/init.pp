@@ -11,7 +11,7 @@
 # [*use_lsyncd*] <Bool>
 #   default: true (
 #            enable/disable directory watching.
-#            When disable csync2 must be triggered manually.
+#            When disabled csync2 must be triggered manually.
 #            ). Optional
 #
 # [*nodes_ip4*] <Array>
