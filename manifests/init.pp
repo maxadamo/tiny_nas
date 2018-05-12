@@ -32,11 +32,11 @@ class lsync_csync2 (
     fail('please provide values for the array $nodes_ip4')
   } elsif empty($nodes_ip6) {
     fail('please provide values for the array $nodes_ip6')
-  } elsif not ($csync2_ssl_key) {
+  } elsif !($csync2_ssl_key) {
     fail('please provide a value for $csync2_ssl_key')
-  } elsif not ($csync2_ssl_cert) {
+  } elsif !($csync2_ssl_cert) {
     fail('please provide a value for $csync2_ssl_cert')
-  } elsif not ($csync2_preshared_key) {
+  } elsif !($csync2_preshared_key) {
     fail('please provide a value for $csync2_preshared_key')
   }
 
