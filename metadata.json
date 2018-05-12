@@ -1,0 +1,40 @@
+{
+  "name": "maxadamo-lsyncd_csync2",
+  "version": "0.1.0",
+  "author": "maxadamo",
+  "summary": "Remote directory synchronization with Lscynd and Csync2",
+  "license": "GPL-3.0",
+  "source": "https://github.com/maxadamo/lsyncd_csync2",
+  "project_page": "https://github.com/maxadamo/lsyncd_csync2",
+  "issues_url": "https://github.com/maxadamo/lsyncd_csync2/issues",
+  "dependencies": [
+    {
+      "name": "puppetlabs-stdlib",
+      "version_requirement": ">= 1.0.0"
+    },
+    {
+      "name": "puppetlabs-firewall",
+      "version_requirement": ">= 1.9.0"
+    },
+    {
+      "name": "puppetlabs-xinetd",
+      "version_requirement": ">= 3.0.0"
+    }
+
+  ],
+  "data_provider": "hiera",
+  "operatingsystem_support": [{
+      "operatingsystem": "RedHat",
+      "operatingsystemrelease": [
+        "7"
+      ]
+    },
+    {
+      "operatingsystem": "CentOS",
+      "operatingsystemrelease": [
+        "7"
+      ]
+    }
+  ]
+}
+
