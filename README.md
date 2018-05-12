@@ -27,7 +27,6 @@ openssl req -x509 -newkey rsa:1024 -days 7200 \
 -keyout /etc/csync2/csync2_ssl_key.pem -nodes \
 -out ./csync2_ssl_cert.pem -subj '/CN=puppet'
 csync2 -k ./csync2_puppet-group.key
-
 ```
 
 You can either store the values in Hiera or they can be provided as templates. 
@@ -66,8 +65,8 @@ class { 'lsyncd_csync2':
 
 ## Limitations
 
-It is untested on Ubuntu/Debian.
-Perhaps the configuration files should be places on a different location (please let me know if this is the case).
+It is untested on Ubuntu/Debian, but I foresee only one possible problem.
+Perhaps the configuration files should be placed on a different location (please let me know if this is the case).
 
 ## Development
 
