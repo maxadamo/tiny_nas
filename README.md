@@ -18,7 +18,7 @@ and with less dependencies.
 ### Setup Requirements
 
 On CentOS 7 the package csync2 is missing.
-You can download here an [RPM](http://repo.okay.com.mx/?dir=centos/7/x86_64/release)
+You can download an [RPM here](http://repo.okay.com.mx/?dir=centos/7/x86_64/release)
 
 You need to create the keys beforehand, using the following commands:
 
@@ -65,8 +65,8 @@ class { 'lsyncd_csync2':
 
 ## Limitations
 
-It is untested on Ubuntu/Debian, but I foresee only one possible problem.
-Perhaps the configuration files should be placed on a different location (please let me know if this is the case).
+While it is untested on Ubuntu/Debian, I cannot think of any problem that can happen (I provided already different package names based on the OS family)
+Please let me know if you have issues with Debian/Ubuntu.
 
 ## Development
 
