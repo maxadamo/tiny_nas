@@ -17,7 +17,7 @@ and with less dependencies.
 
 ### Setup Requirements
 
-On CentOS 7 the package csync2 is missing. 
+On CentOS 7 the package csync2 is missing.
 You can download here an [RPM](http://repo.okay.com.mx/?dir=centos/7/x86_64/release)
 
 You need to create the keys beforehand, using the following commands:
@@ -29,7 +29,7 @@ openssl req -x509 -newkey rsa:1024 -days 7200 \
 csync2 -k ./csync2_puppet-group.key
 ```
 
-You can either store the values in Hiera or they can be provided as templates. 
+You can either store the values in Hiera or they can be provided as templates.
 
 ## Usage
 
