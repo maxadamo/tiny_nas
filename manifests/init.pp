@@ -75,7 +75,7 @@
 # Copyright 2018 Massimiliano Adamo, unless otherwise noted.
 #
 class lsyncd_csync2 (
-  Bool $use_lsyncd             = $::lsyncd_csync2::params::use_lsyncd,
+  Boolean $use_lsyncd          = $::lsyncd_csync2::params::use_lsyncd,
   String $sync_group           = $::lsyncd_csync2::params::sync_group,
   Array $sync_dir              = $::lsyncd_csync2::params::sync_dir,
   Array $sync_exclude          = $::lsyncd_csync2::params::sync_exclude,
