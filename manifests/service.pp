@@ -1,14 +1,13 @@
 # == Class: lsync_csync2::service
 #
 class lsync_csync2::service (
-  Array $nodes_ip4 = $::lsync_csync2::params::nodes_ip4,
-  Array $nodes_ip6 = $::lsync_csync2::params::nodes_ip6
+  $nodes_ip4  = $::lsync_csync2::params::nodes_ip4,
+  $nodes_ip6  = $::lsync_csync2::params::nodes_ip6,
   ) inherits lsync_csync2::params {
 
   $nodes_ips = concat($nodes_ip4, $nodes_ip6, '127.0.0.1')
   $_only_from = delete($nodes_ips, [$::ipadress, $::ipadress6])
   $only_from = strip(join($_only_from, ' '))
-  $pkgs = ['sqlite', 'csync2', 'lsyncd']
 
   xinetd::service { 'csync2':
     disable        => 'no',
@@ -25,8 +24,7 @@ class lsync_csync2::service (
     log_on_success => '',
     only_from      => $only_from,
     log_on_failure => 'USERID',
-    per_source     => 'UNLIMITED',
-    require        => Package[$pkgs];
+    per_source     => 'UNLIMITED';
   }
 
   service { 'lsyncd':

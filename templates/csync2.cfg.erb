@@ -1,17 +1,18 @@
 lock-timeout 60;
 
-group <%= @csync_group %> {
-<% @nodes_hosts.each do |this_node| -%>
+group <%= @sync_group %> {
+<% @nodes_hostname.each do |this_node| -%>
     host <%= this_node.gsub(/\.(.*)/,'') %>;
 <% end -%>
-    key /etc/csync2_<%= @csync_group %>-group.key;
-<% @csync_dir.each do |include_dir| -%>
+    key /etc/csync2_<%= @sync_group %>-group.key;
+
+<% @sync_dir.each do |include_dir| -%>
     include <%= include_dir %>;
 <% end -%>
 
-    exclude *~ .*;
-    exclude *.log;
-    exclude *.pid;
+<% @sync_exclude.each do |exclude_dir| -%>
+    include <%= exclude_dir %>;
+<% end -%>
 
     backup-directory /var/log/csync2/sync-conflicts/;
     backup-generations 2;
