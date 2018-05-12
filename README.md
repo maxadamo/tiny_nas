@@ -30,7 +30,7 @@ csync2 -k ./csync2_puppet-group.key
 
 ```
 
-You can either store the values in Hiera, or it can provide them as templates. 
+You can either store the values in Hiera or they can be provided as templates. 
 
 ## Usage
 
@@ -49,7 +49,7 @@ class { 'lsyncd_csync2':
 }
 ```
 
-You can also use templates for the keys:
+If you use templates for the keys:
 
 ```puppet
 class { 'lsyncd_csync2':
@@ -66,8 +66,8 @@ class { 'lsyncd_csync2':
 
 ## Limitations
 
-It is untested on Ubuntu/Debian. 
-Perhaps the configuration files should be places on a different location (please inform me if this is the case). 
+It is untested on Ubuntu/Debian.
+Perhaps the configuration files should be places on a different location (please let me know if this is the case).
 
 ## Development
 
