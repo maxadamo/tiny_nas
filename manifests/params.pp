@@ -1,16 +1,18 @@
 # == Class: lsync_csync2::params
 #
+# (see file init.pp for variables explanation )
+#
 class lsync_csync2::params {
 
-  $nodes_ip4 = [] # an array of IP4, mandatory
-  $nodes_ip6 = [] # an array of ipv6
-  $node_hostname = [] # an array of hostnames, mandatory
-  $sync_group = 'sync_group'
-  $sync_dir = ['/sync1', '/sync2']
+  $nodes_ip4 = []
+  $nodes_ip6 = []
+  $node_hostname = []
+  $sync_group = 'main'
+  $sync_dir = []
   $sync_exclude = ['*.swp', '*~', '.*', '*.log', '*.pid']
-  $csync2_ssl_key = lookup('csync2_ssl_key')
-  $csync2_ssl_cert = lookup('csync2_ssl_cert')
-  $csync2_preshared_key = lookup('csync2_preshared_key')
-  $csync_pkgs = ['sqlite', 'csync2', 'lsyncd']
+  $csync2_ssl_key = undef
+  $csync2_ssl_cert = undef
+  $csync2_preshared_key = undef
+  $csync_packages = ['sqlite', 'csync2', 'lsyncd']
 
 }

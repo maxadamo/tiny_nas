@@ -1,17 +1,47 @@
 # == Class: lsync_csync2
 #
-# == Example
+# Setup remote directory synchronization with Lscynd and Csync2
 #
-# Create certificate:
+# == Quick Overview and Examples
 #
-# cd /etc/
-# openssl req -x509 -newkey rsa:1024 -days 7200 \
-# -keyout /etc/csync2/csync2_ssl_key.pem -nodes \
-# -out /etc/csync2/csync2_ssl_cert.pem -subj '/CN=puppet'
-# csync2 -k /etc/csync2_puppet-group.key
-# chmod 0600 /etc/csync2_puppet-group.key
+# (see file README.md )
 #
-# and store them to hiera or store as templates
+# === Parameters & Variables
+#
+# [*nodes_ip4*] <Array>
+#   default: empty (list of servers IPv4). Mandatory.
+#
+# [*nodes_ip6*] <Array>
+#   default: empty (list of servers IPv6). Mandatory.
+#
+# [*nodes_hostname*] <Array>
+#   default: empty (list of servers hostnames). Mandatory.
+#
+# [*sync_group*] <String>
+#   default: 'main' (name for the synchronizazion group). Optional.
+#
+# [*sync_dir*] <Array>
+#   default: empty (list of directories to synchronize and watch). Mandatory.
+#
+# [*sync_exclude*] <Array>
+#   default: ['*.swp', '*~', '.*', '*.log', '*.pid']
+#            (list of directories to exclude from synchronization). Optional.
+#
+# [*csync2_ssl_key*] <String>
+#   default: undef
+#            (ssl key: it can be the content of the key as a variable or
+#            something like template('mymodule/ssl_key'.
+#            see file README.md to learn how to generate one). Mandatory.
+#
+# [*csync2_ssl_cert*] <String>
+#   default: undef (ssl cert: similar to csync2_ssl_key). Mandatory.
+#
+# [*csync2_preshared_key*] <String>
+#   default: undef (ssl cert: similar to csync2_ssl_key). Mandatory.
+#
+# [*csync_packages*] <Array>
+#   default: ['sqlite', 'csync2', 'lsyncd'] 
+#            (csync_packages: packages to install). Optional
 #
 class lsync_csync2 (
   String $sync_group           = $::lsync_csync2::params::sync_group,
@@ -20,7 +50,7 @@ class lsync_csync2 (
   String $csync2_ssl_key       = $::lsync_csync2::params::csync2_ssl_key,
   String $csync2_ssl_cert      = $::lsync_csync2::params::csync2_ssl_cert,
   String $csync2_preshared_key = $::lsync_csync2::params::csync2_preshared_key,
-  Array $csync_pkgs            = $::lsync_csync2::params::csync_pkgs,
+  Array $csync_packages        = $::lsync_csync2::params::csync_packages,
   Array $nodes_hostname        = $::lsync_csync2::params::nodes_hostname,
   Array $nodes_ip4             = $::lsync_csync2::params::nodes_ip4,
   Array $nodes_ip6             = $::lsync_csync2::params::nodes_ip6
@@ -32,6 +62,10 @@ class lsync_csync2 (
     fail('please provide values for the array $nodes_ip4')
   } elsif empty($nodes_ip6) {
     fail('please provide values for the array $nodes_ip6')
+  } elsif empty($nodes_ip6) {
+    fail('please provide values for the array $nodes_ip6')
+  } elsif empty($sync_dir) {
+    fail('please provide values for the array $sync_dir')
   } elsif !($csync2_ssl_key) {
     fail('please provide a value for $csync2_ssl_key')
   } elsif !($csync2_ssl_cert) {
@@ -51,11 +85,17 @@ class lsync_csync2 (
       csync2_ssl_key       => $csync2_ssl_key,
       csync2_ssl_cert      => $csync2_ssl_cert,
       csync2_preshared_key => $csync2_preshared_key,
-      csync_pkgs           => $csync_pkgs,
+      csync_packages       => $csync_packages,
       nodes_hostname       => $nodes_hostname
   }
 
-  package { $csync_pkgs: ensure => present; }
+  $csync_packages.each | String $csync_package | {
+    unless defined(Package[$csync_package]) {
+      package { $csync_package:
+        ensure => installed;
+      }
+    }
+  }
 
 }
 # vim:ts=2:sw=2

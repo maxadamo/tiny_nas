@@ -7,7 +7,7 @@ class lsync_csync2::files (
   $csync2_ssl_key       = $::lsync_csync2::params::csync2_ssl_key,
   $csync2_ssl_cert      = $::lsync_csync2::params::csync2_ssl_cert,
   $csync2_preshared_key = $::lsync_csync2::params::csync2_preshared_key,
-  $csync_pkgs           = $::lsync_csync2::params::csync_pkgs,
+  $csync_packages       = $::lsync_csync2::params::csync_packages,
   $nodes_hostname       = $::lsync_csync2::params::nodes_hostname
   ) inherits lsync_csync2::params {
 
@@ -16,7 +16,7 @@ class lsync_csync2::files (
       ensure  => file,
       owner   => root,
       group   => root,
-      require => Package[$csync_pkgs],
+      require => Package[$csync_packages],
       before  => Xinetd::Service['csync2'];
     '/etc/lsyncd.conf':
       notify  => Service['lsyncd'],
