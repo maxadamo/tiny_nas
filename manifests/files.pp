@@ -3,7 +3,7 @@
 class lsyncd_csync2::files (
   $use_lsyncd,
   $nodes_hostname,
-  $sync_dir,
+  Array $sync_dir,
   $csync2_ssl_key,
   $csync2_ssl_cert,
   $csync2_preshared_key,
