@@ -1,7 +1,7 @@
 lock-timeout 60;
 
 group <%= @sync_group %> {
-<% @nodes_hostname.each do |this_node| -%>
+<% @nodes_hostnames.each do |this_node| -%>
     host <%= this_node.gsub(/\.(.*)/,'') %>;
 <% end -%>
     key /etc/csync2_<%= @sync_group %>-group.key;

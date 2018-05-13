@@ -2,7 +2,7 @@
 #
 class lsyncd_csync2::files (
   $use_lsyncd,
-  $nodes_hostname,
+  $nodes_hostnames,
   $sync_dir,
   $csync2_ssl_key,
   $csync2_ssl_cert,

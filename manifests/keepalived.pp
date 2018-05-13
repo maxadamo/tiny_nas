@@ -2,6 +2,7 @@
 #
 class lsyncd_csync2::keepalived (
   $network_interface,
+  $nodes_hostname,
   $nodes_ip4,
   $vip_ip4,
   $vip_ip4_subnet,
@@ -16,7 +17,8 @@ class lsyncd_csync2::keepalived (
     fail('$vip_ip6_subnet is set $vip_ip6 is not set')
   }
 
-  $peer_ip = delete($nodes_ip4, $::ipaddress)
+  $peer_ip4 = delete($nodes_ip4, $::ipaddress)
+  $peer_host = delete($nodes_ip4, [$::hostname, $::fqdn])
 
   include ::keepalived
 
@@ -27,12 +29,18 @@ class lsyncd_csync2::keepalived (
   }
 
   if ($vip_ip6) {
+    $peer_ip6 = delete($nodes_ip6, $::ipaddress6)
+    host6 { "${peer_host}6":
+      ip           => $peer_ip6,
+      hostname     => $peer_host,
+      host_aliases => ["${peer_host}.${::domain}"];
+    }
     keepalived::vrrp::instance { 'NFS':
       interface                  => $network_interface,
       state                      => 'BACKUP',
       virtual_router_id          => '50',
       unicast_source_ip          => $::ipaddress,
-      unicast_peers              => [$peer_ip],
+      unicast_peers              => [$peer_ip4],
       priority                   => '100',
       auth_type                  => 'PASS',
       auth_pass                  => 'secret',
@@ -48,7 +56,7 @@ class lsyncd_csync2::keepalived (
       state                => 'BACKUP',
       virtual_router_id    => '50',
       unicast_source_ip    => $::ipaddress,
-      unicast_peers        => [$peer_ip],
+      unicast_peers        => [$peer_ip4],
       priority             => '100',
       auth_type            => 'PASS',
       auth_pass            => 'secret',
@@ -58,5 +66,11 @@ class lsyncd_csync2::keepalived (
       notify_script_master => '/etc/keepalived/keepalived-up.sh';
     }
   }
+
+    host6 { $peer_host:
+      ip           => $peer_ip4,
+      hostname     => $peer_host,
+      host_aliases => ["${peer_host}.${::domain}"];
+    }
 
 }

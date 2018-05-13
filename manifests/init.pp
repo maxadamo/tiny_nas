@@ -20,7 +20,7 @@
 # [*nodes_ip6*] <Array>
 #   default: empty (list of servers IPv6). Mandatory.
 #
-# [*nodes_hostname*] <Array>
+# [*nodes_hostnames*] <Array>
 #   default: empty (list of servers hostnames). Mandatory.
 #
 # [*sync_group*] <String>
@@ -56,7 +56,7 @@
 # class { 'lsyncd_csync2':
 #   sync_group           => 'puppet_ca',
 #   sync_dir             => ['/etc/puppetlabs/puppet/ssl'],
-#   nodes_hostname       => ['puppet02.domain.org', 'puppet03.domain.org'],
+#   nodes_hostnames       => ['puppet02.domain.org', 'puppet03.domain.org'],
 #   nodes_ip4            => ['192.168.0.10', '192.168.0.11'],
 #   nodes_ip6            => ['2001:798:3::56', '2001:798:3::54'],
 #   csync2_ssl_key       => lookup('csync2_ssl_key'),
@@ -84,18 +84,19 @@ class lsyncd_csync2 (
   String $csync2_preshared_key     = $::lsyncd_csync2::params::csync2_preshared_key,
   Array $lsyncd_packages           = $::lsyncd_csync2::params::lsyncd_packages,
   Array $csync_packages            = $::lsyncd_csync2::params::csync_packages,
-  Array $nodes_hostname            = $::lsyncd_csync2::params::nodes_hostname,
+  Array $nodes_hostnames            = $::lsyncd_csync2::params::nodes_hostnames,
   Array $nodes_ip4                 = $::lsyncd_csync2::params::nodes_ip4,
   Array $nodes_ip6                 = $::lsyncd_csync2::params::nodes_ip6,
   String $vip_ip4                  = $::lsyncd_csync2::params::vip_ip4,
   String $vip_ip4_subnet           = $::lsyncd_csync2::params::vip_ip4_subnet,
   String $network_interface        = $::lsyncd_csync2::params::network_interface,
+  String $dns_domain               = $::lsyncd_csync2::params::dns_domain,
   Optional[String] $vip_ip6        = $::lsyncd_csync2::params::vip_ip6,
   Optional[String] $vip_ip6_subnet = $::lsyncd_csync2::params::vip_ip6_subnet
   ) inherits lsyncd_csync2::params {
 
-  if empty($nodes_hostname) {
-    fail('please provide values for the array $nodes_hostname')
+  if empty($nodes_hostnames) {
+    fail('please provide values for the array $nodes_hostnames')
   } elsif empty($nodes_ip4) {
     fail('please provide values for the array $nodes_ip4')
   } elsif empty($nodes_ip6) {
@@ -131,8 +132,9 @@ class lsyncd_csync2 (
       csync2_preshared_key => $csync2_preshared_key,
       csync_packages       => $csync_packages,
       lsyncd_packages      => $lsyncd_packages,
-      nodes_hostname       => $nodes_hostname;
+      nodes_hostnames       => $nodes_hostnames;
     'lsyncd_csync2::keepalived':
+      dns_domain        => $dns_domain,
       network_interface => $network_interface,
       nodes_ip4         => $nodes_ip4,
       vip_ip4           => $vip_ip4,
