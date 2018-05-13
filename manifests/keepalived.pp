@@ -31,8 +31,8 @@ class lsyncd_csync2::keepalived (
   if ($vip_ip6) {
     $peer_ip6 = delete($nodes_ip6, $::ipaddress6)
     host6 { "${peer_host}6":
-      ip           => $peer_ip6,
-      hostname     => $peer_host,
+      ip           => $peer_ip6[0],
+      hostname     => $peer_host[0],
       host_aliases => ["${peer_host}.${::domain}"];
     }
     keepalived::vrrp::instance { 'NFS':
@@ -40,7 +40,7 @@ class lsyncd_csync2::keepalived (
       state                      => 'BACKUP',
       virtual_router_id          => '50',
       unicast_source_ip          => $::ipaddress,
-      unicast_peers              => [$peer_ip4],
+      unicast_peers              => [$peer_ip4[0]],
       priority                   => '100',
       auth_type                  => 'PASS',
       auth_pass                  => 'secret',
@@ -56,7 +56,7 @@ class lsyncd_csync2::keepalived (
       state                => 'BACKUP',
       virtual_router_id    => '50',
       unicast_source_ip    => $::ipaddress,
-      unicast_peers        => [$peer_ip4],
+      unicast_peers        => [$peer_ip4[0]],
       priority             => '100',
       auth_type            => 'PASS',
       auth_pass            => 'secret',
@@ -68,8 +68,8 @@ class lsyncd_csync2::keepalived (
   }
 
   host6 { $peer_host:
-    ip           => $peer_ip4,
-    hostname     => $peer_host,
+    ip           => $peer_ip4[0],
+    hostname     => $peer_host[0],
     host_aliases => ["${peer_host}.${::domain}"];
   }
 
