@@ -87,8 +87,8 @@ class lsyncd_csync2 (
   Array $nodes_hostname        = $::lsyncd_csync2::params::nodes_hostname,
   Array $nodes_ip4             = $::lsyncd_csync2::params::nodes_ip4,
   Array $nodes_ip6             = $::lsyncd_csync2::params::nodes_ip6,
-  Array $vip_ip4               = $::lsyncd_csync2::params::vip_ip4,
-  Array $vip_ip6               = $::lsyncd_csync2::params::vip_ip6
+  String $vip_ip4              = $::lsyncd_csync2::params::vip_ip4,
+  Optional[String] $vip_ip6    = $::lsyncd_csync2::params::vip_ip6
   ) inherits lsyncd_csync2::params {
 
   if empty($nodes_hostname) {
