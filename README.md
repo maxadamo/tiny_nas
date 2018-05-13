@@ -65,8 +65,8 @@ class { 'lsyncd_csync2':
 
 ## Limitations
 
-While it is untested on Ubuntu/Debian, I cannot think of any problem that can happen (I provided already different package names based on the OS family)
-Please let me know if you have issues with Debian/Ubuntu.
+It is untested on more then two hosts.
+It is untested withou IPv6.
 
 ## Development
 
