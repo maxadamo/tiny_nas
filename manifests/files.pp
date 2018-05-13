@@ -42,7 +42,7 @@ class lsyncd_csync2::files (
     '/etc/csync2_ssl_key.pem':
       mode    => '0640',
       content => $csync2_ssl_key;
-    ['/var/log/csync2', '/var/log/csync2/sync-conflicts']:
+    ['/var/log/csync2', '/var/log/csync2/sync-conflicts', '/var/log/lsyncd']:
       ensure => directory;
     '/etc/keepalived/nfs_check.sh':
       mode    => '0755',
