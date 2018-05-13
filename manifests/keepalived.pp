@@ -18,7 +18,7 @@ class lsyncd_csync2::keepalived (
   }
 
   $peer_ip4 = delete($nodes_ip4, $::ipaddress)
-  $peer_host = delete($nodes_ip4, [$::hostname, $::fqdn])
+  $peer_host = delete($nodes_hostnames, [$::hostname, $::fqdn])
 
   include ::keepalived
 
