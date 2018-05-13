@@ -135,9 +135,9 @@ class lsyncd_csync2 (
     'lsyncd_csync2::keepalived':
       network_interface => $network_interface,
       nodes_ip4         => $nodes_ip4,
-      vip_ip4           => $vip_ip4
+      vip_ip4           => $vip_ip4,
       vip_ip4_subnet    => $vip_ip4_subnet,
-      nodes_ip6         => $nodes_ip6[],
+      nodes_ip6         => $nodes_ip6,
       vip_ip6           => $vip_ip6,
       vip_ip6_subnet    => $vip_ip6_subnet;
     'lscynd_csync2::nfs':;
