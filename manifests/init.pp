@@ -140,7 +140,7 @@ class lsyncd_csync2 (
       nodes_ip6         => $nodes_ip6,
       vip_ip6           => $vip_ip6,
       vip_ip6_subnet    => $vip_ip6_subnet;
-    'lscynd_csync2::nfs':;
+    'lsyncd_csync2::nfs':;
   }
 
   if any2bool($use_lsyncd) == true {
