@@ -67,10 +67,10 @@ class lsyncd_csync2::keepalived (
     }
   }
 
-    host6 { $peer_host:
-      ip           => $peer_ip4,
-      hostname     => $peer_host,
-      host_aliases => ["${peer_host}.${::domain}"];
-    }
+  host6 { $peer_host:
+    ip           => $peer_ip4,
+    hostname     => $peer_host,
+    host_aliases => ["${peer_host}.${::domain}"];
+  }
 
 }
