@@ -5,7 +5,7 @@
 class lsyncd_csync2::params {
 
   $use_lsyncd = true
-  $vip_ip4 = []
+  $vip_ip4 = ''
   $vip_ip6 = undef
   $nodes_ip4 = []
   $nodes_ip6 = []
