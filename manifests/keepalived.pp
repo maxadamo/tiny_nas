@@ -33,7 +33,7 @@ class lsyncd_csync2::keepalived (
     host6 { "${peer_host}6":
       ip           => $peer_ip6[0],
       hostname     => $peer_host[0],
-      host_aliases => ["${peer_host}.${::domain}"];
+      host_aliases => ["${peer_host[0]}.${::domain}"];
     }
     keepalived::vrrp::instance { 'NFS':
       interface                  => $network_interface,
