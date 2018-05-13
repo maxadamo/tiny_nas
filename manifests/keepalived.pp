@@ -10,7 +10,7 @@ class lsyncd_csync2::keepalived (
   $vip_ip6_subnet = undef,
   ) inherits lsyncd_csync2::params {
 
-  if ($vip_ip6) and not ($vip_ip6_subnet) {
+  if ($vip_ip6) and !($vip_ip6_subnet) {
     fail('$vip_ip6 is set $vip_ip6_subnet is not set')
   } elsif ($vip_ip6_subnet) and not ($vip_ip6) {
     fail('$vip_ip6_subnet is set $vip_ip6 is not set')
