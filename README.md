@@ -24,7 +24,7 @@ You need to create the keys beforehand, using the following commands:
 
 ```sh
 openssl req -x509 -newkey rsa:1024 -days 7200 \
--keyout /etc/csync2/csync2_ssl_key.pem -nodes \
+-keyout ./csync2_ssl_key.pem -nodes \
 -out ./csync2_ssl_cert.pem -subj '/CN=puppet'
 csync2 -k ./csync2_puppet-group.key
 ```
