@@ -5,7 +5,9 @@ class lsyncd_csync2::firewall (
   $nodes_ip6 = []
   ) {
 
-  $nodes_ips = concat($nodes_ip4, $nodes_ip6)
+  $_nodes_ips = concat($nodes_ip4, $nodes_ip6)
+  $nodes_ips = delete($_nodes_ips, [$::ipadress, $::ipadress6])
+
   $nodes_ips.each | String $node_ip | {
     if ':' in $node_ip { $provider = 'ip6tables' } else { $provider = 'iptables' }
     firewall {

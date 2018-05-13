@@ -86,7 +86,9 @@ class lsyncd_csync2 (
   Array $csync_packages        = $::lsyncd_csync2::params::csync_packages,
   Array $nodes_hostname        = $::lsyncd_csync2::params::nodes_hostname,
   Array $nodes_ip4             = $::lsyncd_csync2::params::nodes_ip4,
-  Array $nodes_ip6             = $::lsyncd_csync2::params::nodes_ip6
+  Array $nodes_ip6             = $::lsyncd_csync2::params::nodes_ip6,
+  Array $vip_ip4               = $::lsyncd_csync2::params::vip_ip4,
+  Array $vip_ip6               = $::lsyncd_csync2::params::vip_ip6
   ) inherits lsyncd_csync2::params {
 
   if empty($nodes_hostname) {
@@ -126,7 +128,8 @@ class lsyncd_csync2 (
       csync2_preshared_key => $csync2_preshared_key,
       csync_packages       => $csync_packages,
       lsyncd_packages      => $lsyncd_packages,
-      nodes_hostname       => $nodes_hostname
+      nodes_hostname       => $nodes_hostname;
+    'lsyncd_csync2::keepalived':;
   }
 
   if any2bool($use_lsyncd) == true {

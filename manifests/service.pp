@@ -31,8 +31,7 @@ class lsyncd_csync2::service (
 
   if any2bool($use_lsyncd) == true {
     service { 'lsyncd':
-      ensure     => running,
-      enable     => true,
+      enable     => false,
       hasrestart => true,
       hasstatus  => true,
       require    => Package[$lsyncd_packages];
