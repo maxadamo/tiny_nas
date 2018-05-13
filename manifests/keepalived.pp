@@ -18,8 +18,8 @@ class lsyncd_csync2::keepalived (
   }
 
   $peer_ip4 = delete($nodes_ip4, $::ipaddress)
-  $peer_host = delete($nodes_hostnames, [$::hostname, $::fqdn])
-
+  $_peer_host = delete($nodes_hostnames, [$::hostname, $::fqdn])
+  $peer_host = regsubst($_peer_host, ".${::domain}", '')
   include ::keepalived
 
   keepalived::vrrp::script { 'check_nfs':
@@ -70,7 +70,7 @@ class lsyncd_csync2::keepalived (
   host6 { $peer_host:
     ip           => $peer_ip4[0],
     hostname     => $peer_host[0],
-    host_aliases => ["${peer_host}.${::domain}"];
+    host_aliases => ["${peer_host[0]}.${::domain}"];
   }
 
 }
