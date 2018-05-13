@@ -90,7 +90,6 @@ class lsyncd_csync2 (
   String $vip_ip4                  = $::lsyncd_csync2::params::vip_ip4,
   String $vip_ip4_subnet           = $::lsyncd_csync2::params::vip_ip4_subnet,
   String $network_interface        = $::lsyncd_csync2::params::network_interface,
-  String $dns_domain               = $::lsyncd_csync2::params::dns_domain,
   Optional[String] $vip_ip6        = $::lsyncd_csync2::params::vip_ip6,
   Optional[String] $vip_ip6_subnet = $::lsyncd_csync2::params::vip_ip6_subnet
   ) inherits lsyncd_csync2::params {
@@ -132,9 +131,8 @@ class lsyncd_csync2 (
       csync2_preshared_key => $csync2_preshared_key,
       csync_packages       => $csync_packages,
       lsyncd_packages      => $lsyncd_packages,
-      nodes_hostnames       => $nodes_hostnames;
+      nodes_hostnames      => $nodes_hostnames;
     'lsyncd_csync2::keepalived':
-      dns_domain        => $dns_domain,
       network_interface => $network_interface,
       nodes_ip4         => $nodes_ip4,
       vip_ip4           => $vip_ip4,

@@ -11,7 +11,6 @@ class lsyncd_csync2::params {
   $vip_ip6_subnet = unde
   $nodes_ip4 = []
   $nodes_ip6 = []
-  $dns_domain = undef
   $nodes_hostnames = []
   $network_interface = 'eth0'
   $sync_group = 'main'
