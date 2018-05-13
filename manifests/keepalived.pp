@@ -2,7 +2,7 @@
 #
 class lsyncd_csync2::keepalived (
   $network_interface,
-  $nodes_hostname,
+  $nodes_hostnames,
   $nodes_ip4,
   $vip_ip4,
   $vip_ip4_subnet,
