@@ -44,6 +44,19 @@ class lsyncd_csync2::files (
       content => $csync2_ssl_key;
     ['/var/log/csync2', '/var/log/csync2/sync-conflicts']:
       ensure => directory;
+    '/etc/keepalived/nfs_check.sh':
+      mode    => '0755',
+      require => Class['keepalived'],
+      content => template("${module_name}/nfs_check.sh.erb");
+    '/etc/keepalived/keepalived-down.sh':
+      mode    => '0755',
+      require => Class['keepalived'],
+      source  => "puppet:///modules/${module_name}/keepalived-down.sh";
+    '/etc/keepalived/keepalived-up.sh':
+      mode    => '0755',
+      require => Class['keepalived'],
+      source  => "puppet:///modules/${module_name}/keepalived-up.sh";
+
   }
 
   # work-around for centos 7

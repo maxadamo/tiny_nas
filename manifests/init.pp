@@ -75,20 +75,23 @@
 # Copyright 2018 Massimiliano Adamo, unless otherwise noted.
 #
 class lsyncd_csync2 (
-  Boolean $use_lsyncd          = $::lsyncd_csync2::params::use_lsyncd,
-  String $sync_group           = $::lsyncd_csync2::params::sync_group,
-  Array $sync_dir              = $::lsyncd_csync2::params::sync_dir,
-  Array $sync_exclude          = $::lsyncd_csync2::params::sync_exclude,
-  String $csync2_ssl_key       = $::lsyncd_csync2::params::csync2_ssl_key,
-  String $csync2_ssl_cert      = $::lsyncd_csync2::params::csync2_ssl_cert,
-  String $csync2_preshared_key = $::lsyncd_csync2::params::csync2_preshared_key,
-  Array $lsyncd_packages       = $::lsyncd_csync2::params::lsyncd_packages,
-  Array $csync_packages        = $::lsyncd_csync2::params::csync_packages,
-  Array $nodes_hostname        = $::lsyncd_csync2::params::nodes_hostname,
-  Array $nodes_ip4             = $::lsyncd_csync2::params::nodes_ip4,
-  Array $nodes_ip6             = $::lsyncd_csync2::params::nodes_ip6,
-  String $vip_ip4              = $::lsyncd_csync2::params::vip_ip4,
-  Optional[String] $vip_ip6    = $::lsyncd_csync2::params::vip_ip6
+  Boolean $use_lsyncd              = $::lsyncd_csync2::params::use_lsyncd,
+  String $sync_group               = $::lsyncd_csync2::params::sync_group,
+  Array $sync_dir                  = $::lsyncd_csync2::params::sync_dir,
+  Array $sync_exclude              = $::lsyncd_csync2::params::sync_exclude,
+  String $csync2_ssl_key           = $::lsyncd_csync2::params::csync2_ssl_key,
+  String $csync2_ssl_cert          = $::lsyncd_csync2::params::csync2_ssl_cert,
+  String $csync2_preshared_key     = $::lsyncd_csync2::params::csync2_preshared_key,
+  Array $lsyncd_packages           = $::lsyncd_csync2::params::lsyncd_packages,
+  Array $csync_packages            = $::lsyncd_csync2::params::csync_packages,
+  Array $nodes_hostname            = $::lsyncd_csync2::params::nodes_hostname,
+  Array $nodes_ip4                 = $::lsyncd_csync2::params::nodes_ip4,
+  Array $nodes_ip6                 = $::lsyncd_csync2::params::nodes_ip6,
+  String $vip_ip4                  = $::lsyncd_csync2::params::vip_ip4,
+  String $vip_ip4_subnet           = $::lsyncd_csync2::params::vip_ip4_subnet,
+  String $network_interface        = $::lsyncd_csync2::params::network_interface,
+  Optional[String] $vip_ip6        = $::lsyncd_csync2::params::vip_ip6,
+  Optional[String] $vip_ip6_subnet = $::lsyncd_csync2::params::vip_ip6_subnet
   ) inherits lsyncd_csync2::params {
 
   if empty($nodes_hostname) {
@@ -129,7 +132,15 @@ class lsyncd_csync2 (
       csync_packages       => $csync_packages,
       lsyncd_packages      => $lsyncd_packages,
       nodes_hostname       => $nodes_hostname;
-    #'lsyncd_csync2::keepalived':;
+    'lsyncd_csync2::keepalived':
+      network_interface => $network_interface,
+      nodes_ip4         => $nodes_ip4,
+      vip_ip4           => $vip_ip4
+      vip_ip4_subnet    => $vip_ip4_subnet,
+      nodes_ip6         => $nodes_ip6[],
+      vip_ip6           => $vip_ip6,
+      vip_ip6_subnet    = $vip_ip6_subnet;
+    'lscynd_csync2::nfs':;
   }
 
   if any2bool($use_lsyncd) == true {

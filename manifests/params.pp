@@ -6,10 +6,13 @@ class lsyncd_csync2::params {
 
   $use_lsyncd = true
   $vip_ip4 = undef
+  $vip_ip4_subnet = undef
   $vip_ip6 = undef
+  $vip_ip6_subnet = unde
   $nodes_ip4 = []
   $nodes_ip6 = []
   $node_hostname = []
+  $network_interface = 'eth0'
   $sync_group = 'main'
   $sync_dir = []
   $sync_exclude = ['*.swp', '*~', '.*', '*.log', '*.pid']

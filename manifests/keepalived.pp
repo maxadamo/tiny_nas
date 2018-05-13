@@ -1,31 +1,33 @@
 # == Class: lsyncd_csync2::keepalived
 #
 class lsyncd_csync2::keepalived (
-  $proxysql_hosts    = $::lsyncd_csync2::params::proxysql_hosts,
-  $proxysql_vip      = $::lsyncd_csync2::params::proxysql_vip,
-  $network_interface = $::lsyncd_csync2::params::network_interface,
-  $manage_ipv6       = undef
+  $network_interface,
+  $nodes_ip4,
+  $vip_ip4,
+  $vip_ip4_subnet,
+  $nodes_ip6 = [],
+  $vip_ip6 = undef,
+  $vip_ip6_subnet = undef,
   ) inherits lsyncd_csync2::params {
 
-  $vip_key = inline_template('<% @proxysql_vip.each do |key, value| %><%= key %><% end -%>')
-  $proxysql_key_first = inline_template('<% @proxysql_hosts.each_with_index do |(key, value), index| %><% if index == 0 %><%= key %><% end -%><% end -%>')
-  $proxysql_key_second = inline_template('<% @proxysql_hosts.each_with_index do |(key, value), index| %><% if index == 1 %><%= key %><% end -%><% end -%>')
-  $peer_ip = $::fqdn ? {
-    $proxysql_key_first  => $proxysql_hosts[$proxysql_key_second]['ipv4'],
-    $proxysql_key_second => $proxysql_hosts[$proxysql_key_first]['ipv4'],
+  if ($vip_ip6) and not ($vip_ip6_subnet) {
+    fail('$vip_ip6 is set $vip_ip6_subnet is not set')
+  } elsif ($vip_ip6_subnet) and not ($vip_ip6) {
+    fail('$vip_ip6_subnet is set $vip_ip6 is not set')
   }
 
-  include ::keepalived
-  class { '::galera_proxysql::proxysql::firewall': peer_ip => $peer_ip; }
+  $peer_ip = delete($nodes_ip4, $::ipaddress)
 
-  keepalived::vrrp::script { 'check_proxysql':
-    script   => 'killall -0 proxysql',
+  include ::keepalived
+
+  keepalived::vrrp::script { 'check_nfs':
+    script   => '/etc/keepalived/nfs_check.sh',
     interval => '2',
     weight   => '2';
   }
 
-  if ($manage_ipv6) {
-    keepalived::vrrp::instance { 'ProxySQL':
+  if ($vip_ip6) {
+    keepalived::vrrp::instance { 'NFS':
       interface                  => $network_interface,
       state                      => 'BACKUP',
       virtual_router_id          => '50',
@@ -34,22 +36,26 @@ class lsyncd_csync2::keepalived (
       priority                   => '100',
       auth_type                  => 'PASS',
       auth_pass                  => 'secret',
-      virtual_ipaddress          => "${proxysql_vip[$vip_key]['ipv4']}/${proxysql_vip[$vip_key]['ipv4_subnet']}",
-      virtual_ipaddress_excluded => ["${proxysql_vip[$vip_key]['ipv6']}/${proxysql_vip[$vip_key]['ipv6_subnet']}"],
-      track_script               => 'check_proxysql';
+      virtual_ipaddress          => "${vip_ip4}/${vip_ip4_subnet}",
+      virtual_ipaddress_excluded => ["${vip_ip6}/${vip_ip6_subnet}"],
+      track_script               => 'check_nfs',
+      notify_script_backup       => '/etc/keepalived/keepalived-down.sh',
+      notify_script_master       => '/etc/keepalived/keepalived-up.sh';
     }
   } else {
-    keepalived::vrrp::instance { 'ProxySQL':
-      interface         => $network_interface,
-      state             => 'BACKUP',
-      virtual_router_id => '50',
-      unicast_source_ip => $::ipaddress,
-      unicast_peers     => [$peer_ip],
-      priority          => '100',
-      auth_type         => 'PASS',
-      auth_pass         => 'secret',
-      virtual_ipaddress => "${proxysql_vip[$vip_key]['ipv4']}/${proxysql_vip[$vip_key]['ipv4_subnet']}",
-      track_script      => 'check_proxysql';
+    keepalived::vrrp::instance { 'NFS':
+      interface            => $network_interface,
+      state                => 'BACKUP',
+      virtual_router_id    => '50',
+      unicast_source_ip    => $::ipaddress,
+      unicast_peers        => [$peer_ip],
+      priority             => '100',
+      auth_type            => 'PASS',
+      auth_pass            => 'secret',
+      virtual_ipaddress    => "${vip_ip4}/${vip_ip4_subnet}",
+      track_script         => 'check_nfs',
+      notify_script_backup => '/etc/keepalived/keepalived-down.sh',
+      notify_script_master => '/etc/keepalived/keepalived-up.sh';
     }
   }
 
