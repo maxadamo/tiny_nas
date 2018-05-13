@@ -129,7 +129,7 @@ class lsyncd_csync2 (
       csync_packages       => $csync_packages,
       lsyncd_packages      => $lsyncd_packages,
       nodes_hostname       => $nodes_hostname;
-    'lsyncd_csync2::keepalived':;
+    #'lsyncd_csync2::keepalived':;
   }
 
   if any2bool($use_lsyncd) == true {
