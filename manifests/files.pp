@@ -47,16 +47,19 @@ class lsyncd_csync2::files (
   }
 
   # work-around for centos 7
-  exec {
-    default:
-      path    => '/usr/bin:/usr/sbin:/bin';
-    'create_sqlite_link':
-      command => 'ln -sf /usr/lib64/libsqlite3.so.0.8.6 /usr/lib64/libsqlite3.so',
-      creates => '/usr/lib64/libsqlite3.so',
-      onlyif  => 'test -f /usr/lib64/libsqlite3.so.0.8.6';
-    'create_sync_dir':
+  exec { 'create_sqlite_link':
+    command => 'ln -sf /usr/lib64/libsqlite3.so.0.8.6 /usr/lib64/libsqlite3.so',
+    path    => '/usr/bin:/usr/sbin:/bin',
+    creates => '/usr/lib64/libsqlite3.so',
+    onlyif  => 'test -f /usr/lib64/libsqlite3.so.0.8.6';
+  }
+
+  $sync_dir.each | String $sync_directory | {
+    exec { "create_sync_dir_${sync_directory}":
       command => "install -d ${sync_dir}",
+      path    => '/usr/bin:/usr/sbin:/bin',
       creates => $sync_dir;
+    }
   }
 
 }
