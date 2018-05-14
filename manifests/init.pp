@@ -26,8 +26,11 @@
 # [*sync_group*] <String>
 #   default: 'main' (name for the synchronizazion group). Optional.
 #
-# [*sync_dir*] <Array>
-#   default: empty (list of directories to synchronize and watch). Mandatory.
+# [*sync_dir*] <Hash>
+#   default: empty (
+#            hash of directories associated to clients who gain access
+#            through NFS ACL
+#            ). Mandatory.
 #
 # [*sync_exclude*] <Array>
 #   default: ['*.swp', '*~', '.*', '*.log', '*.pid']
@@ -77,14 +80,14 @@
 class lsyncd_csync2 (
   Boolean $use_lsyncd              = $::lsyncd_csync2::params::use_lsyncd,
   String $sync_group               = $::lsyncd_csync2::params::sync_group,
-  Array $sync_dir                  = $::lsyncd_csync2::params::sync_dir,
+  Hash $sync_dir                   = $::lsyncd_csync2::params::sync_dir,
   Array $sync_exclude              = $::lsyncd_csync2::params::sync_exclude,
   String $csync2_ssl_key           = $::lsyncd_csync2::params::csync2_ssl_key,
   String $csync2_ssl_cert          = $::lsyncd_csync2::params::csync2_ssl_cert,
   String $csync2_preshared_key     = $::lsyncd_csync2::params::csync2_preshared_key,
   Array $lsyncd_packages           = $::lsyncd_csync2::params::lsyncd_packages,
   Array $csync_packages            = $::lsyncd_csync2::params::csync_packages,
-  Array $nodes_hostnames            = $::lsyncd_csync2::params::nodes_hostnames,
+  Array $nodes_hostnames           = $::lsyncd_csync2::params::nodes_hostnames,
   Array $nodes_ip4                 = $::lsyncd_csync2::params::nodes_ip4,
   Array $nodes_ip6                 = $::lsyncd_csync2::params::nodes_ip6,
   String $vip_ip4                  = $::lsyncd_csync2::params::vip_ip4,

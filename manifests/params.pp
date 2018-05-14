@@ -14,7 +14,7 @@ class lsyncd_csync2::params {
   $nodes_hostnames = []
   $network_interface = 'eth0'
   $sync_group = 'main'
-  $sync_dir = []
+  $sync_dir = {}
   $sync_exclude = ['*.swp', '*~', '.*', '*.log', '*.pid']
   $csync2_ssl_key = undef
   $csync2_ssl_cert = undef
@@ -26,3 +26,4 @@ class lsyncd_csync2::params {
   }
 
 }
+# vim:ts=2:sw=2

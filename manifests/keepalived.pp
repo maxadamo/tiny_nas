@@ -74,3 +74,4 @@ class lsyncd_csync2::keepalived (
   }
 
 }
+# vim:ts=2:sw=2

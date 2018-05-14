@@ -21,6 +21,8 @@ class lsyncd_csync2::files (
     $lsyncd_conf = absent
   }
 
+  $sync_dir_array = keys($sync_dir)
+
   file {
     default:
       ensure  => file,
@@ -73,7 +75,7 @@ class lsyncd_csync2::files (
     onlyif  => 'test -f /usr/lib64/libsqlite3.so.0.8.6';
   }
 
-  $sync_dir.each | String $sync_directory | {
+  $sync_dir_array.each | String $sync_directory | {
     exec { "create_sync_dir_${sync_directory}":
       command => "install -d ${sync_directory}",
       path    => '/usr/bin:/usr/sbin:/bin',
