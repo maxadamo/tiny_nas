@@ -26,10 +26,7 @@ class lsyncd_csync2::files (
   $sync_dir_array = keys($sync_dir)
   $lsyncd_dir_array = $sync_dir_array
   $sync_dir_array.each | String $sync_item | {
-    if $sync_dir[$sync_item][watch_dir] == 'false' {
-      notify { "notify ${sync_dir[$sync_item][watch_dir]}":
-        message => "notify ${sync_dir[$sync_item][watch_dir]}";
-      }
+    if $sync_dir[$sync_item][dir_watch] == false {
       delete($lsyncd_dir_array, $sync_item)
     }
   }
