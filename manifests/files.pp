@@ -17,10 +17,10 @@ class lsyncd_csync2::files (
 
   if any2bool($use_lsyncd) == true {
     $all_packages = concat($csync_packages, $lsyncd_packages)
-    $lsyncd_conf = file
+    $lsyncd_conf_status = file
   } else {
     $all_packages = $csync_packages
-    $lsyncd_conf = absent
+    $lsyncd_conf_status = absent
   }
 
   $sync_dir_array = keys($sync_dir)
@@ -33,7 +33,7 @@ class lsyncd_csync2::files (
       require => Package[$all_packages],
       before  => Xinetd::Service['csync2'];
     "${lsyncd_conf_dir}/${lsyncd_conf}":
-      ensure  => $lsyncd_conf,
+      ensure  => $lsyncd_conf_status,
       notify  => Service['lsyncd'],
       require => File[$lsyncd_conf_dir],
       content => template("${module_name}/lsyncd.conf.erb");
