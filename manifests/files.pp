@@ -24,11 +24,10 @@ class lsyncd_csync2::files (
   }
 
   $sync_dir_array = keys($sync_dir)
-  $lsyncd_dir_array = $sync_dir_array
   $sync_dir_array.each | String $sync_item | {
-    if $sync_dir[$sync_item][dir_watch] == false {
-      delete($lsyncd_dir_array, $sync_item)
-    }
+
+  $filtered_syncd_dir_array = $sync_dir.keys.filter | $sync_item | {
+    $sync_dir.dig($sync_item, 'dir_watch').any2bool
   }
 
   file {
