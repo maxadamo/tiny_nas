@@ -79,6 +79,8 @@
 #
 class lsyncd_csync2 (
   Boolean $use_lsyncd              = $::lsyncd_csync2::params::use_lsyncd,
+  String $lsyncd_conf              = $::lsyncd_csync2::params::lsyncd_conf,
+  String $lsyncd_conf_dir          = $::lsyncd_csync2::params::lsyncd_conf_dir,
   String $sync_group               = $::lsyncd_csync2::params::sync_group,
   Hash $sync_dir                   = $::lsyncd_csync2::params::sync_dir,
   Array $sync_exclude              = $::lsyncd_csync2::params::sync_exclude,
@@ -134,6 +136,8 @@ class lsyncd_csync2 (
       csync2_preshared_key => $csync2_preshared_key,
       csync_packages       => $csync_packages,
       lsyncd_packages      => $lsyncd_packages,
+      lsyncd_conf          => $lsyncd_conf,
+      lsyncd_conf_dir      => $lsyncd_conf_dir,
       nodes_hostnames      => $nodes_hostnames;
     'lsyncd_csync2::keepalived':
       network_interface => $network_interface,
