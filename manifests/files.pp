@@ -49,7 +49,7 @@ class lsyncd_csync2::files (
       content => $csync2_ssl_key;
     [
       '/var/log/csync2', '/var/log/csync2/sync-conflicts',
-      '/var/log/lsyncd', '/etc/lsyncd', $lsyncd_conf_dir
+      '/var/log/lsyncd', $lsyncd_conf_dir
     ]:
       ensure => directory;
     '/etc/keepalived/nfs_check.sh':
