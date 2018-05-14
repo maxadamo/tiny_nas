@@ -93,7 +93,7 @@ initSync = {
 }
 
 local sources = {
-<% @lsyncd_dir_array.each do |include_dir| -%>
+<% @filtered_syncd_dir_array.each do |include_dir| -%>
     ["<%= include_dir %>"] = "<%= @sync_group %>",
 <% end -%>
 }
