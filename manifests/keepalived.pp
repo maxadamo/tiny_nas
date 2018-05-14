@@ -30,11 +30,6 @@ class lsyncd_csync2::keepalived (
 
   if ($vip_ip6) {
     $peer_ip6 = delete($nodes_ip6, $::ipaddress6)
-    host6 { "${peer_host}6":
-      ip           => $peer_ip6[0],
-      hostname     => $peer_host[0],
-      host_aliases => ["${peer_host[0]}.${::domain}"];
-    }
     keepalived::vrrp::instance { 'NFS':
       interface                  => $network_interface,
       state                      => 'BACKUP',
@@ -65,12 +60,6 @@ class lsyncd_csync2::keepalived (
       notify_script_backup => '/etc/keepalived/keepalived-down.sh',
       notify_script_master => '/etc/keepalived/keepalived-up.sh';
     }
-  }
-
-  host6 { $peer_host:
-    ip           => $peer_ip4[0],
-    hostname     => $peer_host[0],
-    host_aliases => ["${peer_host[0]}.${::domain}"];
   }
 
 }
