@@ -10,6 +10,8 @@ class lsyncd_csync2::files (
   $sync_exclude    = $::lsyncd_csync2::params::sync_exclude,
   $csync_packages  = $::lsyncd_csync2::params::csync_packages,
   $lsyncd_packages = $::lsyncd_csync2::params::lsyncd_packages,
+  $lsyncd_conf_dir = $::lsyncd_csync2::params::lsyncd_conf_dir,
+  $lsyncd_conf     = $::lsyncd_csync2::params::lsyncd_conf,
   $sync_group      = $::lsyncd_csync2::params::sync_group,
   ) inherits lsyncd_csync2::params {
 
@@ -30,9 +32,10 @@ class lsyncd_csync2::files (
       group   => root,
       require => Package[$all_packages],
       before  => Xinetd::Service['csync2'];
-    '/etc/lsyncd.conf':
+    "${lsyncd_conf_dir}/${lsyncd_conf}":
       ensure  => $lsyncd_conf,
       notify  => Service['lsyncd'],
+      require => File[$lsyncd_conf_dir],
       content => template("${module_name}/lsyncd.conf.erb");
     "/etc/csync2_${sync_group}.cfg":
       content => template("${module_name}/csync2.cfg.erb");
@@ -46,7 +49,7 @@ class lsyncd_csync2::files (
       content => $csync2_ssl_key;
     [
       '/var/log/csync2', '/var/log/csync2/sync-conflicts',
-      '/var/log/lsyncd', '/etc/lsyncd'
+      '/var/log/lsyncd', '/etc/lsyncd', $lsyncd_conf_dir
     ]:
       ensure => directory;
     '/etc/keepalived/nfs_check.sh':
@@ -61,10 +64,6 @@ class lsyncd_csync2::files (
       mode    => '0755',
       require => Class['keepalived'],
       source  => "puppet:///modules/${module_name}/keepalived-up.sh";
-    '/etc/lsyncd/lsyncd.conf.lua':
-      ensure  => link,
-      target  => '/etc/lsyncd.conf',
-      require => File['/etc/lsyncd'];
   }
 
   # work-around for centos 7
