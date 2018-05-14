@@ -23,7 +23,7 @@ class lsyncd_csync2::keepalived (
   include ::keepalived
 
   keepalived::vrrp::script { 'check_nfs':
-    script   => '/etc/keepalived/nfs_check.sh',
+    script   => 'killall -0 nfsd',
     interval => '2',
     weight   => '2';
   }
