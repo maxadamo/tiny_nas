@@ -6,7 +6,7 @@ group <%= @sync_group %> {
 <% end -%>
     key /etc/csync2_<%= @sync_group %>-group.key;
 
-<% @filtered_syncd_dir_array.each do |include_dir| -%>
+<% @unfiltered_syncd_dir_array.each do |include_dir| -%>
     include <%= include_dir %>;
 <% end -%>
 

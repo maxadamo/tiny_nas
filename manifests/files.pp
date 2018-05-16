@@ -27,6 +27,26 @@ class lsyncd_csync2::files (
   $filtered_syncd_dir_array = $sync_dir.keys.filter | $sync_item | {
     $sync_dir.dig($sync_item, 'dir_watch').any2bool
   }
+  $unfiltered_syncd_dir_array = $sync_dir.keys.filter | $sync_item | {
+    $sync_dir.dig($sync_item, 'dir_watch').any2bool
+  }
+
+  if ! empty($unfiltered_syncd_dir_array) {
+    file { "/etc/csync2_${sync_group}_async.cfg":
+      ensure  => file,
+      owner   => root,
+      group   => root,
+      require => Package[$all_packages],
+      before  => Xinetd::Service['csync2'],
+      content => template("${module_name}/csync2_async.cfg.erb");
+    }
+    cron { 'csync2_async':
+      command => "/usr/sbin/csync2 -C ${sync_group}_async -x",
+      user    => 'root',
+      hour    => 2,
+      minute  => 0,
+    }
+  }
 
   file {
     default:
