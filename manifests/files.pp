@@ -28,7 +28,7 @@ class lsyncd_csync2::files (
     $sync_dir.dig($sync_item, 'dir_watch').any2bool
   }
   $unfiltered_syncd_dir_array = $sync_dir.keys.filter | $sync_item | {
-    $sync_dir.dig($sync_item, 'dir_watch').any2bool
+    ! $sync_dir.dig($sync_item, 'dir_watch').any2bool
   }
 
   if ! empty($unfiltered_syncd_dir_array) {
