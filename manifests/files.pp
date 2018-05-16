@@ -41,7 +41,7 @@ class lsyncd_csync2::files (
       content => template("${module_name}/csync2_async.cfg.erb");
     }
     cron { 'csync2_async':
-      command => "/usr/sbin/csync2 -C ${sync_group}_async -x",
+      command => "pgrep -f lsyncd >/dev/null && /usr/sbin/csync2 -C ${sync_group}_async -x",
       user    => 'root',
       hour    => 2,
       minute  => 0,
