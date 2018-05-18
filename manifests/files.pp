@@ -7,13 +7,14 @@ class lsyncd_csync2::files (
   $csync2_ssl_key,
   $csync2_ssl_cert,
   $csync2_preshared_key,
-  $nas_root        = $::lsyncd_csync2::params::nas_root,
-  $sync_exclude    = $::lsyncd_csync2::params::sync_exclude,
-  $csync_packages  = $::lsyncd_csync2::params::csync_packages,
-  $lsyncd_packages = $::lsyncd_csync2::params::lsyncd_packages,
-  $lsyncd_conf_dir = $::lsyncd_csync2::params::lsyncd_conf_dir,
-  $lsyncd_conf     = $::lsyncd_csync2::params::lsyncd_conf,
-  $sync_group      = $::lsyncd_csync2::params::sync_group,
+  $nas_root         = $::lsyncd_csync2::params::nas_root,
+  $sync_exclude     = $::lsyncd_csync2::params::sync_exclude,
+  $csync_packages   = $::lsyncd_csync2::params::csync_packages,
+  $lsyncd_packages  = $::lsyncd_csync2::params::lsyncd_packages,
+  $lsyncd_conf_dir  = $::lsyncd_csync2::params::lsyncd_conf_dir,
+  $lsyncd_conf      = $::lsyncd_csync2::params::lsyncd_conf,
+  $sync_group       = $::lsyncd_csync2::params::sync_group,
+  $cron_sync_minute = $::lsyncd_csync2::params::sync_group,
   ) inherits lsyncd_csync2::params {
 
   if any2bool($use_lsyncd) == true {
@@ -44,8 +45,7 @@ class lsyncd_csync2::files (
     cron { 'csync2_async':
       command => "pgrep -f lsyncd >/dev/null && /usr/sbin/csync2 -C ${sync_group}async -x",
       user    => 'root',
-      hour    => 2,
-      minute  => 0,
+      minute  => $cron_sync_minute;
     }
   }
 

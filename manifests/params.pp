@@ -36,6 +36,7 @@ class lsyncd_csync2::params {
     'Debian' => ['libsqlite3-0', 'csync2', 'psmisc'],
     'RedHat' => ['sqlite', 'csync2']
   }
+  $cron_sync_minute = '*/3'
 
 }
 # vim:ts=2:sw=2

@@ -90,6 +90,7 @@
 # Copyright 2018 Massimiliano Adamo, unless otherwise noted.
 #
 class lsyncd_csync2 (
+
   Boolean $use_lsyncd                    = $::lsyncd_csync2::params::use_lsyncd,
   String $lsyncd_conf                    = $::lsyncd_csync2::params::lsyncd_conf,
   String $lsyncd_conf_dir                = $::lsyncd_csync2::params::lsyncd_conf_dir,
@@ -113,6 +114,7 @@ class lsyncd_csync2 (
   Optional[Boolean] $manage_lvm          = $::lsyncd_csync2::params::manage_lvm,
   Optional[Integer[1, default]] $lv_size = $::lsyncd_csync2::params::lv_size,
   Optional[String] $vg_name              = $::lsyncd_csync2::params::vg_name,
+  Optional[String] $cron_sync_minute     = $::lsyncd_csync2::params::sync_group,
 
   ) inherits lsyncd_csync2::params {
 
