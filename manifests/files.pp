@@ -103,7 +103,7 @@ class lsyncd_csync2::files (
       command => "install -d ${nas_root}/${sync_directory}",
       path    => '/usr/bin:/usr/sbin:/bin',
       creates => "${nas_root}/${sync_directory}",
-      notify  => Service['nfs-server.service'];
+      notify  => Service['nfs-server'];
     }
   }
 
