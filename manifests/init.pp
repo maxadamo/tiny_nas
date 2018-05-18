@@ -97,10 +97,10 @@ class lsyncd_csync2 (
   String $network_interface              = $::lsyncd_csync2::params::network_interface,
   Optional[String] $vip_ip6              = $::lsyncd_csync2::params::vip_ip6,
   Optional[String] $vip_ip6_subnet       = $::lsyncd_csync2::params::vip_ip6_subnet,
-  String $nas_root                       = $::lsyncd_csync2::params::vip_ip6_subnet,
-  Optional[Boolean] $manage_lvm          = $::lsyncd_csync2::params::vip_ip6_subnet,
-  Optional[Integer[1, default]] $lv_size = $::lsyncd_csync2::params::vip_ip6_subnet,
-  Optional[String] $vg_name              = $::lsyncd_csync2::params::vip_ip6_subnet,
+  String $nas_root                       = $::lsyncd_csync2::params::nas_root,
+  Optional[Boolean] $manage_lvm          = $::lsyncd_csync2::params::manage_lvm,
+  Optional[Integer[1, default]] $lv_size = $::lsyncd_csync2::params::lv_size,
+  Optional[String] $vg_name              = $::lsyncd_csync2::params::vg_name,
 
   ) inherits lsyncd_csync2::params {
 
