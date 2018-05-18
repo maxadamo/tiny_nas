@@ -3,6 +3,7 @@
 class lsyncd_csync2::files (
   $use_lsyncd,
   $nodes_hostnames,
+  $nas_root,
   $sync_dir,
   $csync2_ssl_key,
   $csync2_ssl_cert,
@@ -99,9 +100,9 @@ class lsyncd_csync2::files (
 
   $sync_dir_array.each | String $sync_directory | {
     exec { "create_sync_dir_${sync_directory}":
-      command => "install -d ${sync_directory}",
+      command => "install -d ${nas_root}/${sync_directory}",
       path    => '/usr/bin:/usr/sbin:/bin',
-      creates => $sync_directory;
+      creates => "${nas_root}/${sync_directory}";
     }
   }
 

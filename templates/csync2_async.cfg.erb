@@ -7,7 +7,7 @@ group <%= @sync_group %> {
     key /etc/csync2_<%= @sync_group %>-group.key;
 
 <% @unfiltered_syncd_dir_array.each do |include_dir| -%>
-    include <%= include_dir %>;
+    include <%= @nas_root %>/<%= include_dir %>;
 <% end -%>
 
 <% @sync_exclude.each do |exclude_dir| -%>

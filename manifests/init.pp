@@ -123,6 +123,12 @@ class lsyncd_csync2 (
   }
 
   class {
+    'lsyncd_csync2::lvm':
+      nas_root   => $nas_root,
+      manage_lvm => $manage_lvm,
+      lv_size    => $lv_size,
+      vg_name    => $vg_name,
+      before     => Class['lsyncd_csync2::files'];
     'lsyncd_csync2::firewall':
       nodes_ip4 => $nodes_ip4,
       nodes_ip6 => $nodes_ip6;

@@ -94,7 +94,7 @@ initSync = {
 
 local sources = {
 <% @filtered_syncd_dir_array.each do |include_dir| -%>
-    ["<%= include_dir %>"] = "<%= @sync_group %>",
+    ["<%= @nas_root %>/<%= include_dir %>"] = "<%= @sync_group %>",
 <% end -%>
 }
 for key, value in pairs(sources) do
