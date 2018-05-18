@@ -3,11 +3,11 @@
 class lsyncd_csync2::files (
   $use_lsyncd,
   $nodes_hostnames,
-  $nas_root,
   $sync_dir,
   $csync2_ssl_key,
   $csync2_ssl_cert,
   $csync2_preshared_key,
+  $nas_root        = $::lsyncd_csync2::params::nas_root,
   $sync_exclude    = $::lsyncd_csync2::params::sync_exclude,
   $csync_packages  = $::lsyncd_csync2::params::csync_packages,
   $lsyncd_packages = $::lsyncd_csync2::params::lsyncd_packages,
