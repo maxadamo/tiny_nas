@@ -53,6 +53,18 @@
 #   default: ['sqlite', 'csync2', 'lsyncd'] 
 #            (csync_packages: packages to install). Optional
 #
+# [*nas_root*] <String>
+#   default: '/nas' (this is the nas root directory)
+#
+# [*manage_lvm*] <Boolean>
+#   default: false (wheter to manage LVM or not)
+#
+# [*lv_size*] <Integer>
+#   default: undef (LV size in GB: minimum 1)
+#
+# [*vg_name*] <String>
+#   default: undef (name of Volume Group)
+#
 # Examples
 # --------
 #
