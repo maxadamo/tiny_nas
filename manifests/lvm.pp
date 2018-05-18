@@ -36,13 +36,13 @@ class lsyncd_csync2::lvm (
       group  => root;
     }
 
-    mount { '/var/lib/mysql':
+    mount { $nas_root:
       ensure  => mounted,
       fstype  => 'ext4',
       atboot  => true,
       device  => "/dev/mapper/${vg_name}-lv_nas",
       require => [
-        File['/var/lib/mysql'],
+        File[$nas_root],
         Filesystem["/dev/mapper/${vg_name}-lv_nas"]
       ],
     }
