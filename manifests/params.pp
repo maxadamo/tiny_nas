@@ -14,6 +14,10 @@ class lsyncd_csync2::params {
   $nodes_hostnames = []
   $network_interface = 'eth0'
   $sync_group = 'main'
+  $nas_root = '/nas'
+  $manage_lvm = undef
+  $lv_size = undef
+  $vg_name = undef
   $sync_dir = {}
   $sync_exclude = ['*.swp', '*~', '.*', '*.log', '*.pid']
   $csync2_ssl_key = undef
