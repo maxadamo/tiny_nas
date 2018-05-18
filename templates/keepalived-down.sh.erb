@@ -4,3 +4,6 @@ export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 while pgrep -f lsyncd; do
   systemctl stop lsyncd.service
 done
+
+/usr/sbin/csync2 -C <%= @sync_group %>_async -x
+/usr/sbin/csync2 -C <%= @sync_group %> -x

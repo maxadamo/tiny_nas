@@ -76,14 +76,10 @@ class lsyncd_csync2::files (
       '/var/log/lsyncd', $lsyncd_conf_dir
     ]:
       ensure => directory;
-    '/etc/keepalived/nfs_check.sh':
-      mode    => '0755',
-      require => Class['keepalived'],
-      content => template("${module_name}/nfs_check.sh.erb");
     '/etc/keepalived/keepalived-down.sh':
       mode    => '0755',
       require => Class['keepalived'],
-      source  => "puppet:///modules/${module_name}/keepalived-down.sh";
+      content => template("${module_name}/keepalived-down.sh.erb");
     '/etc/keepalived/keepalived-up.sh':
       mode    => '0755',
       require => Class['keepalived'],
