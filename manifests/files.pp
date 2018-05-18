@@ -33,16 +33,16 @@ class lsyncd_csync2::files (
   }
 
   if ! empty($unfiltered_syncd_dir_array) {
-    file { "/etc/csync2_${sync_group}_async.cfg":
+    file { "/etc/csync2_${sync_group}async.cfg":
       ensure  => file,
       owner   => root,
       group   => root,
       require => Package[$all_packages],
       before  => Xinetd::Service['csync2'],
-      content => template("${module_name}/csync2_async.cfg.erb");
+      content => template("${module_name}/csync2async.cfg.erb");
     }
     cron { 'csync2_async':
-      command => "pgrep -f lsyncd >/dev/null && /usr/sbin/csync2 -C ${sync_group}_async -x",
+      command => "pgrep -f lsyncd >/dev/null && /usr/sbin/csync2 -C ${sync_group}async -x",
       user    => 'root',
       hour    => 2,
       minute  => 0,
