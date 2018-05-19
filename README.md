@@ -11,9 +11,20 @@
 
 ## Description
 
-This module sets up directory synchronization across a number of servers.
-It is a condensed version of thias and scottsb modules, less convoluted
-and with less dependencies.
+Tiny_NAS sets up a tiny, low-end HA NAS with two ways synchronization.
+tiny_nas works in two ways. A directory can be either:
+
+* watched and immediately synchronized based on kernel events
+* synchronized through a cron job
+
+You can have a combination of them (some directory watched other directories under cron)
+
+No ZFS. Tiny NAS is tiny, and it doesn't need a fancy filesystem or complex volume management.
+It allows to use LVM through the options mentioned in `init.pp`.
+If you intend to use ZFS, disable LVM management, and add the ZFS volume yourself.
+
+Tiny NAS is low-end by design.
+If you have a huge amount of files and the files are changing frequently neither lscyncd + csync2 nor scheduled job are a proper solution and you should look in to clustered filesystems.
 
 ### Setup Requirements
 
@@ -66,7 +77,7 @@ class { 'tiny_nas':
 ## Limitations
 
 It is untested on more then two hosts.
-It is untested withou IPv6.
+It is untested without IPv6.
 
 ## Development
 
