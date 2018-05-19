@@ -1,12 +1,12 @@
 {
-  "name": "maxadamo-lsyncd_csync2",
+  "name": "maxadamo-tiny_nas",
   "version": "0.2.0",
   "author": "maxadamo",
   "summary": "Remote directory synchronization with Lscynd and Csync2",
   "license": "GPL-3.0",
-  "source": "https://github.com/maxadamo/lsyncd_csync2",
-  "project_page": "https://github.com/maxadamo/lsyncd_csync2",
-  "issues_url": "https://github.com/maxadamo/lsyncd_csync2/issues",
+  "source": "https://github.com/maxadamo/tiny_nas",
+  "project_page": "https://github.com/maxadamo/tiny_nas",
+  "issues_url": "https://github.com/maxadamo/tiny_nas/issues",
   "dependencies": [
     {
       "name": "puppetlabs-firewall",

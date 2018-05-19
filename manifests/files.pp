@@ -1,21 +1,21 @@
-# == Class: lsyncd_csync2::files
+# == Class: tiny_nas::files
 #
-class lsyncd_csync2::files (
+class tiny_nas::files (
   $use_lsyncd,
   $nodes_hostnames,
   $sync_dir,
   $csync2_ssl_key,
   $csync2_ssl_cert,
   $csync2_preshared_key,
-  $nas_root         = $::lsyncd_csync2::params::nas_root,
-  $sync_exclude     = $::lsyncd_csync2::params::sync_exclude,
-  $csync_packages   = $::lsyncd_csync2::params::csync_packages,
-  $lsyncd_packages  = $::lsyncd_csync2::params::lsyncd_packages,
-  $lsyncd_conf_dir  = $::lsyncd_csync2::params::lsyncd_conf_dir,
-  $lsyncd_conf      = $::lsyncd_csync2::params::lsyncd_conf,
-  $sync_group       = $::lsyncd_csync2::params::sync_group,
-  $cron_sync_minute = $::lsyncd_csync2::params::cron_sync_minute,
-  ) inherits lsyncd_csync2::params {
+  $nas_root         = $::tiny_nas::params::nas_root,
+  $sync_exclude     = $::tiny_nas::params::sync_exclude,
+  $csync_packages   = $::tiny_nas::params::csync_packages,
+  $lsyncd_packages  = $::tiny_nas::params::lsyncd_packages,
+  $lsyncd_conf_dir  = $::tiny_nas::params::lsyncd_conf_dir,
+  $lsyncd_conf      = $::tiny_nas::params::lsyncd_conf,
+  $sync_group       = $::tiny_nas::params::sync_group,
+  $cron_sync_minute = $::tiny_nas::params::cron_sync_minute,
+  ) inherits tiny_nas::params {
 
   if any2bool($use_lsyncd) == true {
     $all_packages = concat($csync_packages, $lsyncd_packages)

@@ -1,6 +1,6 @@
 #
 #
-class { 'lsyncd_csync2':
+class { 'tiny_nas':
   sync_group           => 'puppet_ca',
   sync_dir             => ['/etc/puppetlabs/puppet/ssl'],
   nodes_hostname       => ['puppet02.domain.org', 'puppet03.domain.org'],

@@ -1,11 +1,11 @@
-# == Class: lsyncd_csync2::lvm
+# == Class: tiny_nas::lvm
 #
-class lsyncd_csync2::lvm (
-  $manage_lvm = $::lsyncd_csync2::params::manage_lvm,
-  $lv_size    = $::lsyncd_csync2::params::lv_size,
-  $vg_name    = $::lsyncd_csync2::params::vg_name,
-  $nas_root   = $::lsyncd_csync2::params::nas_root,
-  ) inherits lsyncd_csync2::params {
+class tiny_nas::lvm (
+  $manage_lvm = $::tiny_nas::params::manage_lvm,
+  $lv_size    = $::tiny_nas::params::lv_size,
+  $vg_name    = $::tiny_nas::params::vg_name,
+  $nas_root   = $::tiny_nas::params::nas_root,
+  ) inherits tiny_nas::params {
 
   if ($lv_size) { $first_param = 1 } else { $first_param = 0 }
   if ($vg_name) { $second_param = 1 } else { $second_param = 0 }

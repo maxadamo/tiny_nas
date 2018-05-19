@@ -1,8 +1,8 @@
-# == Class: lsyncd_csync2::params
+# == Class: tiny_nas::params
 #
 # (see file init.pp for variables explanation )
 #
-class lsyncd_csync2::params {
+class tiny_nas::params {
 
   $use_lsyncd = true
   $vip_ip4 = undef

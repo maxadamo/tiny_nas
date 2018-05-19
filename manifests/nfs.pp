@@ -1,9 +1,9 @@
-# Class: lsyncd_csync2::nfs
+# Class: tiny_nas::nfs
 #
 #
-class lsyncd_csync2::nfs (
+class tiny_nas::nfs (
   $sync_dir,
-  $nas_root = $::lsyncd_csync2::params::nas_root,
+  $nas_root = $::tiny_nas::params::nas_root,
 ) {
 
   class { '::nfs':

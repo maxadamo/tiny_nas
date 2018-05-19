@@ -1,4 +1,4 @@
-# lsyncd_csync2
+# tiny_nas
 
 #### Table of Contents
 
@@ -36,7 +36,7 @@ You can either store the values in Hiera or they can be provided as templates.
 This is all you need (ipv6 is optional):
 
 ```puppet
-class { 'lsyncd_csync2':
+class { 'tiny_nas':
   sync_group           => 'puppet_ca',
   sync_dir             => ['/etc/puppetlabs/puppet/ssl'],
   nodes_hostname       => ['puppet02.domain.org', 'puppet03.domain.org'],
@@ -51,7 +51,7 @@ class { 'lsyncd_csync2':
 If you use templates for the keys and you want to disable directory watching:
 
 ```puppet
-class { 'lsyncd_csync2':
+class { 'tiny_nas':
   use_lsyncd           => false,
   sync_group           => 'puppet_ca',
   sync_dir             => ['/etc/puppetlabs/puppet/ssl'],
@@ -70,4 +70,4 @@ It is untested withou IPv6.
 
 ## Development
 
-Feel free to make pull requests and/or open issues on [my GitHub Repository](https://github.com/maxadamo/lsyncd_csync2)
+Feel free to make pull requests and/or open issues on [my GitHub Repository](https://github.com/maxadamo/tiny_nas)

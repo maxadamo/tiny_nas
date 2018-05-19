@@ -1,6 +1,6 @@
-# == Class: lsyncd_csync2::firewall
+# == Class: tiny_nas::firewall
 #
-class lsyncd_csync2::firewall (
+class tiny_nas::firewall (
   $nodes_ip4,
   $nodes_ip6 = []
   ) {
