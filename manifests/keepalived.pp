@@ -1,6 +1,6 @@
-# == Class: lsyncd_csync2::keepalived
+# == Class: tiny_nas::keepalived
 #
-class lsyncd_csync2::keepalived (
+class tiny_nas::keepalived (
   $network_interface,
   $nodes_hostnames,
   $nodes_ip4,
@@ -9,7 +9,7 @@ class lsyncd_csync2::keepalived (
   $nodes_ip6 = [],
   $vip_ip6 = undef,
   $vip_ip6_subnet = undef,
-  ) inherits lsyncd_csync2::params {
+  ) inherits tiny_nas::params {
 
   if ($vip_ip6) and !($vip_ip6_subnet) {
     fail('$vip_ip6 is set but $vip_ip6_subnet is not set')

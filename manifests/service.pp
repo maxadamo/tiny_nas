@@ -1,6 +1,6 @@
-# == Class: lsyncd_csync2::service
+# == Class: tiny_nas::service
 #
-class lsyncd_csync2::service (
+class tiny_nas::service (
   $use_lsyncd,
   $lsyncd_packages,
   $nodes_ip4,

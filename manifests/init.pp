@@ -1,4 +1,4 @@
-# == Class: lsyncd_csync2
+# == Class: tiny_nas
 #
 # Setup remote directory synchronization with Lscynd and Csync2
 #
@@ -68,7 +68,7 @@
 # Examples
 # --------
 #
-# class { 'lsyncd_csync2':
+# class { 'tiny_nas':
 #   sync_group           => 'puppet_ca',
 #   sync_dir             => ['/etc/puppetlabs/puppet/ssl'],
 #   nodes_hostnames       => ['puppet02.domain.org', 'puppet03.domain.org'],
@@ -89,34 +89,34 @@
 #
 # Copyright 2018 Massimiliano Adamo, unless otherwise noted.
 #
-class lsyncd_csync2 (
+class tiny_nas (
 
-  Boolean $use_lsyncd                    = $::lsyncd_csync2::params::use_lsyncd,
-  String $lsyncd_conf                    = $::lsyncd_csync2::params::lsyncd_conf,
-  String $lsyncd_conf_dir                = $::lsyncd_csync2::params::lsyncd_conf_dir,
-  String $sync_group                     = $::lsyncd_csync2::params::sync_group,
-  Hash $sync_dir                         = $::lsyncd_csync2::params::sync_dir,
-  Array $sync_exclude                    = $::lsyncd_csync2::params::sync_exclude,
-  String $csync2_ssl_key                 = $::lsyncd_csync2::params::csync2_ssl_key,
-  String $csync2_ssl_cert                = $::lsyncd_csync2::params::csync2_ssl_cert,
-  String $csync2_preshared_key           = $::lsyncd_csync2::params::csync2_preshared_key,
-  Array $lsyncd_packages                 = $::lsyncd_csync2::params::lsyncd_packages,
-  Array $csync_packages                  = $::lsyncd_csync2::params::csync_packages,
-  Array $nodes_hostnames                 = $::lsyncd_csync2::params::nodes_hostnames,
-  Array $nodes_ip4                       = $::lsyncd_csync2::params::nodes_ip4,
-  Array $nodes_ip6                       = $::lsyncd_csync2::params::nodes_ip6,
-  String $vip_ip4                        = $::lsyncd_csync2::params::vip_ip4,
-  String $vip_ip4_subnet                 = $::lsyncd_csync2::params::vip_ip4_subnet,
-  String $network_interface              = $::lsyncd_csync2::params::network_interface,
-  Optional[String] $vip_ip6              = $::lsyncd_csync2::params::vip_ip6,
-  Optional[String] $vip_ip6_subnet       = $::lsyncd_csync2::params::vip_ip6_subnet,
-  String $nas_root                       = $::lsyncd_csync2::params::nas_root,
-  Optional[Boolean] $manage_lvm          = $::lsyncd_csync2::params::manage_lvm,
-  Optional[Integer[1, default]] $lv_size = $::lsyncd_csync2::params::lv_size,
-  Optional[String] $vg_name              = $::lsyncd_csync2::params::vg_name,
-  Optional[String] $cron_sync_minute     = $::lsyncd_csync2::params::sync_group,
+  Boolean $use_lsyncd                    = $::tiny_nas::params::use_lsyncd,
+  String $lsyncd_conf                    = $::tiny_nas::params::lsyncd_conf,
+  String $lsyncd_conf_dir                = $::tiny_nas::params::lsyncd_conf_dir,
+  String $sync_group                     = $::tiny_nas::params::sync_group,
+  Hash $sync_dir                         = $::tiny_nas::params::sync_dir,
+  Array $sync_exclude                    = $::tiny_nas::params::sync_exclude,
+  String $csync2_ssl_key                 = $::tiny_nas::params::csync2_ssl_key,
+  String $csync2_ssl_cert                = $::tiny_nas::params::csync2_ssl_cert,
+  String $csync2_preshared_key           = $::tiny_nas::params::csync2_preshared_key,
+  Array $lsyncd_packages                 = $::tiny_nas::params::lsyncd_packages,
+  Array $csync_packages                  = $::tiny_nas::params::csync_packages,
+  Array $nodes_hostnames                 = $::tiny_nas::params::nodes_hostnames,
+  Array $nodes_ip4                       = $::tiny_nas::params::nodes_ip4,
+  Array $nodes_ip6                       = $::tiny_nas::params::nodes_ip6,
+  String $vip_ip4                        = $::tiny_nas::params::vip_ip4,
+  String $vip_ip4_subnet                 = $::tiny_nas::params::vip_ip4_subnet,
+  String $network_interface              = $::tiny_nas::params::network_interface,
+  Optional[String] $vip_ip6              = $::tiny_nas::params::vip_ip6,
+  Optional[String] $vip_ip6_subnet       = $::tiny_nas::params::vip_ip6_subnet,
+  String $nas_root                       = $::tiny_nas::params::nas_root,
+  Optional[Boolean] $manage_lvm          = $::tiny_nas::params::manage_lvm,
+  Optional[Integer[1, default]] $lv_size = $::tiny_nas::params::lv_size,
+  Optional[String] $vg_name              = $::tiny_nas::params::vg_name,
+  Optional[String] $cron_sync_minute     = $::tiny_nas::params::sync_group,
 
-  ) inherits lsyncd_csync2::params {
+  ) inherits tiny_nas::params {
 
   if empty($nodes_hostnames) {
     fail('please provide values for the array $nodes_hostnames')
@@ -137,21 +137,21 @@ class lsyncd_csync2 (
   }
 
   class {
-    'lsyncd_csync2::lvm':
+    'tiny_nas::lvm':
       nas_root   => $nas_root,
       manage_lvm => $manage_lvm,
       lv_size    => $lv_size,
       vg_name    => $vg_name,
-      before     => Class['lsyncd_csync2::files'];
-    'lsyncd_csync2::firewall':
+      before     => Class['tiny_nas::files'];
+    'tiny_nas::firewall':
       nodes_ip4 => $nodes_ip4,
       nodes_ip6 => $nodes_ip6;
-    'lsyncd_csync2::service':
+    'tiny_nas::service':
       use_lsyncd      => $use_lsyncd,
       lsyncd_packages => $lsyncd_packages,
       nodes_ip4       => $nodes_ip4,
       nodes_ip6       => $nodes_ip6;
-    'lsyncd_csync2::files':
+    'tiny_nas::files':
       use_lsyncd           => $use_lsyncd,
       sync_group           => $sync_group,
       sync_dir             => $sync_dir,
@@ -164,7 +164,7 @@ class lsyncd_csync2 (
       lsyncd_conf          => $lsyncd_conf,
       lsyncd_conf_dir      => $lsyncd_conf_dir,
       nodes_hostnames      => $nodes_hostnames;
-    'lsyncd_csync2::keepalived':
+    'tiny_nas::keepalived':
       network_interface => $network_interface,
       nodes_hostnames   => $nodes_hostnames,
       nodes_ip4         => $nodes_ip4,
@@ -173,7 +173,7 @@ class lsyncd_csync2 (
       nodes_ip6         => $nodes_ip6,
       vip_ip6           => $vip_ip6,
       vip_ip6_subnet    => $vip_ip6_subnet;
-    'lsyncd_csync2::nfs':
+    'tiny_nas::nfs':
       sync_dir => $sync_dir;
   }
 

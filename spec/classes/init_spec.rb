@@ -1,6 +1,6 @@
 require 'spec_helper'
-describe 'lsyncd_csync2' do
+describe 'tiny_nas' do
   context 'with default values for all parameters' do
-    it { should contain_class('lsyncd_csync2') }
+    it { should contain_class('tiny_nas') }
   end
 end
