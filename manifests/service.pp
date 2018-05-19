@@ -8,7 +8,7 @@ class tiny_nas::service (
   ) {
 
   $nodes_ips = concat($nodes_ip4, $nodes_ip6, '127.0.0.1')
-  $_only_from = delete($nodes_ips, [$::ipadress, $::ipadress6])
+  $_only_from = delete($nodes_ips, [$::ipaddress, $::ipaddress6])
   $only_from = strip(join($_only_from, ' '))
 
   xinetd::service { 'csync2':
