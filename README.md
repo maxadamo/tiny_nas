@@ -11,15 +11,15 @@
 
 ## Description
 
-Tiny_NAS sets up a tiny, low-end HA NAS with two ways synchronization.
-tiny_nas works in two ways. A directory can be either:
+Tiny_NAS sets up a tiny, low-end Highly-Available NAS with two ways synchronization.
+tiny_nas works in two ways. Directories can be either:
 
 * watched and immediately synchronized based on kernel events
 * synchronized through a cron job
 
-You can have a combination of them (some directory watched other directories under cron)
+You can have a combination of them (some directories watched, other directories under cron)
 
-No ZFS. Tiny NAS is tiny, and it doesn't need a fancy filesystem or complex volume management.
+No ZFS. Tiny NAS is tiny, and it doesn't need a fancy filesystem nor complex volume management.
 It allows to use LVM through the options mentioned in `init.pp`.
 If you intend to use ZFS, disable LVM management, and add the ZFS volume yourself.
 
@@ -46,38 +46,57 @@ You can either store the values in Hiera or they can be provided as templates.
 
 This is all you need (ipv6 is optional):
 
+```yaml
+sync_dir:
+  moodledata:
+    client_list:
+      - '192.168.0.10(rw,insecure,async,no_root_squash)'
+      - '192.168.0.11(rw,insecure,async,no_root_squash)'
+      - '2001:777:3::50(rw,insecure,async,no_root_squash)'
+      - '2001:777:3::51(rw,insecure,async,no_root_squash)'
+    dir_watch: false
+  puppet_ca:
+    client_list:
+      - '192.168.0.12(rw,insecure,async,no_root_squash)'
+      - '192.168.0.13(rw,insecure,async,no_root_squash)'
+      - '2001:777:3::52(rw,insecure,async,no_root_squash)'
+      - '2001:777:3::53(rw,insecure,async,no_root_squash)'
+    dir_watch: true
+```
+
 ```puppet
 class { 'tiny_nas':
-  sync_group           => 'puppet_ca',
-  sync_dir             => ['/etc/puppetlabs/puppet/ssl'],
-  nodes_hostname       => ['puppet02.domain.org', 'puppet03.domain.org'],
-  nodes_ip4            => ['192.168.0.10', '192.168.0.11'],
-  nodes_ip6            => ['2001:798:3::56', '2001:798:3::54'],
+  sync_group           => 'nas',
+  sync_dir             => lookup('sync_dir'),
+  nodes_hostnames      => ['nas01.example.org', 'nas02.example.org'],
+  nodes_ip4            => ['192.168.0.48', '192.168.0.49'],
+  nodes_ip6            => ['2001:777:3::98', '2001:777:3::99'],
+  vip_ip4              => '192.168.0.50',
+  vip_ip4_subnet       => '22',
+  vip_ip6              => '2001:777:3::100',
+  vip_ip6_subnet       => '64',
   csync2_ssl_key       => lookup('csync2_ssl_key'),
   csync2_ssl_cert      => lookup('csync2_ssl_cert'),
-  csync2_preshared_key => lookup('csync2_preshared_key');
+  csync2_preshared_key => lookup('csync2_preshared_key'),
+  manage_lvm           => true,
+  vg_name              => 'rootvg',
+  lv_size              => 3;
 }
 ```
 
-If you use templates for the keys and you want to disable directory watching:
+If can also use templates for the keys:
 
 ```puppet
-class { 'tiny_nas':
-  use_lsyncd           => false,
-  sync_group           => 'puppet_ca',
-  sync_dir             => ['/etc/puppetlabs/puppet/ssl'],
-  nodes_hostname       => ['puppet02.domain.org', 'puppet03.domain.org'],
-  nodes_ip4            => ['192.168.0.10', '192.168.0.11'],
   csync2_ssl_key       => template('mymodule/ssl_key'),
   csync2_ssl_cert      => template('mymodule/ssl_cert'),
   csync2_preshared_key => template('mymodule/preshared_key'),
-}
 ```
 
 ## Limitations
 
 It is untested on more then two hosts.
 It is untested without IPv6.
+Not sure yet what to do with some Keepalived paramter
 
 ## Development
 

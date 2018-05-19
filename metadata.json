@@ -1,8 +1,8 @@
 {
   "name": "maxadamo-tiny_nas",
-  "version": "0.2.0",
+  "version": "0.1.0",
   "author": "maxadamo",
-  "summary": "Remote directory synchronization with Lscynd and Csync2",
+  "summary": "Tiny NAS: a Highly-Avalaible NAS Appliance",
   "license": "GPL-3.0",
   "source": "https://github.com/maxadamo/tiny_nas",
   "project_page": "https://github.com/maxadamo/tiny_nas",
