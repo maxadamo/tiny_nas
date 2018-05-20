@@ -71,6 +71,11 @@ syntax-2.1.9:
   image: ruby:2.1.9
   script:
     - bundle exec rake syntax lint
+  tags:
+    - pdk
+  only:
+    - tags
+
 
 metadata-2.1.9:
   stage: test_2.1.9
