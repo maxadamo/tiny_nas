@@ -1,0 +1,103 @@
+---
+stages:
+  - test_2.4.1
+  - test_2.1.9
+
+before_script:
+  - bundle -v
+  - rm Gemfile.lock || true
+  - gem update --system
+  - gem update bundler
+  - gem --version
+  - bundle -v
+  - bundle install --without system_tests
+
+rubocop-2.4.1:
+  stage: test_2.4.1
+  image: ruby:2.4.1
+  script:
+    - bundle exec rake rubocop
+  tags:
+    - pdk
+  only:
+    - tags
+
+syntax-2.4.1:
+  stage: test_2.4.1
+  image: ruby:2.4.1
+  script:
+    - bundle exec rake syntax lint
+  tags:
+    - pdk
+  only:
+    - tags
+
+metadata-2.4.1:
+  stage: test_2.4.1
+  image: ruby:2.4.1
+  script:
+    - bundle exec rake metadata_lint
+  tags:
+    - pdk
+  only:
+    - tags
+
+rspec-puppet-2.4.1:
+  stage: test_2.4.1
+  image: ruby:2.4.1
+  variables:
+    PUPPET_GEM_VERSION: ~> 4.0
+    CHECK: spec
+  script:
+    - bundle update
+    - bundle exec rake $CHECK
+  tags:
+    - pdk
+  only:
+    - tags
+
+rubocop-2.1.9:
+  stage: test_2.1.9
+  image: ruby:2.1.9
+  script:
+    - bundle exec rake rubocop
+  tags:
+    - pdk
+  only:
+    - tags
+
+syntax-2.1.9:
+  stage: test_2.1.9
+  image: ruby:2.1.9
+  script:
+    - bundle exec rake syntax lint
+  tags:
+    - pdk
+  only:
+    - tags
+
+
+metadata-2.1.9:
+  stage: test_2.1.9
+  image: ruby:2.1.9
+  script:
+    - bundle exec rake metadata_lint
+  tags:
+    - pdk
+  only:
+    - tags
+
+rspec-puppet-2.1.9:
+  stage: test_2.1.9
+  image: ruby:2.1.9
+  variables:
+    PUPPET_GEM_VERSION: ~> 4.0
+    CHECK: spec
+  script:
+    - bundle update
+    - bundle exec rake $CHECK
+  tags:
+    - pdk
+  only:
+    - tags
+
