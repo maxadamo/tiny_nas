@@ -17,18 +17,30 @@ rubocop-2.4.1:
   image: ruby:2.4.1
   script:
     - bundle exec rake rubocop
+  tags:
+    - pdk
+  only:
+    - tags
 
 syntax-2.4.1:
   stage: test_2.4.1
   image: ruby:2.4.1
   script:
     - bundle exec rake syntax lint
+  tags:
+    - pdk
+  only:
+    - tags
 
 metadata-2.4.1:
   stage: test_2.4.1
   image: ruby:2.4.1
   script:
     - bundle exec rake metadata_lint
+  tags:
+    - pdk
+  only:
+    - tags
 
 rspec-puppet-2.4.1:
   stage: test_2.4.1
@@ -39,12 +51,20 @@ rspec-puppet-2.4.1:
   script:
     - bundle update
     - bundle exec rake $CHECK
+  tags:
+    - pdk
+  only:
+    - tags
 
 rubocop-2.1.9:
   stage: test_2.1.9
   image: ruby:2.1.9
   script:
     - bundle exec rake rubocop
+  tags:
+    - pdk
+  only:
+    - tags
 
 syntax-2.1.9:
   stage: test_2.1.9
@@ -57,6 +77,10 @@ metadata-2.1.9:
   image: ruby:2.1.9
   script:
     - bundle exec rake metadata_lint
+  tags:
+    - pdk
+  only:
+    - tags
 
 rspec-puppet-2.1.9:
   stage: test_2.1.9
@@ -67,4 +91,8 @@ rspec-puppet-2.1.9:
   script:
     - bundle update
     - bundle exec rake $CHECK
+  tags:
+    - pdk
+  only:
+    - tags
 
