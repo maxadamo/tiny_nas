@@ -9,12 +9,16 @@
   "issues_url": "https://github.com/maxadamo/tiny_nas/issues",
   "dependencies": [
     {
+      "name": "derdanne-nfs",
+      "version_requirement": ">= 2.0.8 <= 2.0.8"
+    },
+    {
       "name": "puppetlabs-firewall",
-      "version_requirement": ">= 1.9.0"
+      "version_requirement": ">= 1.9.0 <= 1.9.0"
     },
     {
       "name": "puppetlabs-xinetd",
-      "version_requirement": ">= 3.0.0"
+      "version_requirement": ">= 3.0.0 <= 3.0.0"
     }
   ],
   "data_provider": "hiera",
