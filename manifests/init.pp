@@ -144,6 +144,7 @@ class tiny_nas (
       vg_name    => $vg_name,
       before     => Class['tiny_nas::files'];
     'tiny_nas::firewall':
+      sync_dir  => $sync_dir,
       nodes_ip4 => $nodes_ip4,
       nodes_ip6 => $nodes_ip6;
     'tiny_nas::service':

@@ -1,9 +1,39 @@
 # == Class: tiny_nas::firewall
 #
 class tiny_nas::firewall (
+  $sync_dir,
   $nodes_ip4,
   $nodes_ip6 = []
   ) {
+
+# sync_dir:
+#   moodledata:
+#     client_list:
+#       - '83.97.93.24(rw,insecure,async,no_root_squash)'
+#       - '83.97.93.25(rw,insecure,async,no_root_squash)'
+#       - '2001:798:3::12c(rw,insecure,async,no_root_squash)'
+#       - '2001:798:3::12d(rw,insecure,async,no_root_squash)'
+#     dir_watch: false
+#   puppet_ca:
+#     client_list:
+#       - '83.97.92.62(rw,insecure,async,no_root_squash)'
+#       - '83.97.92.60(rw,insecure,async,no_root_squash)'
+#       - '2001:798:3::56(rw,insecure,async,no_root_squash)'
+#       - '2001:798:3::54(rw,insecure,async,no_root_squash)'
+#     dir_watch: true
+#   letsencrypt_wildcard:
+#     client_list:
+#       - '83.97.93.17(rw,insecure,async,no_root_squash)'
+#       - '2001:798:3::125(rw,insecure,async,no_root_squash)'
+#     dir_watch: true
+
+  $filtered_syncd_dir = $sync_dir.filter |$keys, $values| {
+    $keys != 'dir_watch'
+  }
+
+  notify { "test ${filtered_syncd_dir}":
+    message => "test ${filtered_syncd_dir}";
+  }
 
   $nodes_ips = concat($nodes_ip4, $nodes_ip6)
   $peer_ip = delete($nodes_ip4, $::ipaddress)
