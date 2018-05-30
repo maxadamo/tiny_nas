@@ -24,7 +24,7 @@ class tiny_nas::firewall (
         destination => $client_ip,
         provider    => $provider,
         proto       => udp,
-        dport       => 30865;
+        dport       => 111;
     }
   }
 
