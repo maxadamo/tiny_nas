@@ -6,37 +6,27 @@ class tiny_nas::firewall (
   $nodes_ip6 = []
   ) {
 
-# sync_dir:
-#   moodledata:
-#     client_list:
-#       - '83.97.93.24(rw,insecure,async,no_root_squash)'
-#       - '83.97.93.25(rw,insecure,async,no_root_squash)'
-#       - '2001:798:3::12c(rw,insecure,async,no_root_squash)'
-#       - '2001:798:3::12d(rw,insecure,async,no_root_squash)'
-#     dir_watch: false
-#   puppet_ca:
-#     client_list:
-#       - '83.97.92.62(rw,insecure,async,no_root_squash)'
-#       - '83.97.92.60(rw,insecure,async,no_root_squash)'
-#       - '2001:798:3::56(rw,insecure,async,no_root_squash)'
-#       - '2001:798:3::54(rw,insecure,async,no_root_squash)'
-#     dir_watch: true
-#   letsencrypt_wildcard:
-#     client_list:
-#       - '83.97.93.17(rw,insecure,async,no_root_squash)'
-#       - '2001:798:3::125(rw,insecure,async,no_root_squash)'
-#     dir_watch: true
-
-  $filtered_syncd_dir = $sync_dir.filter |$keys, $values| {
-    $keys != 'dir_watch'
-  }
-
-  notify { "test ${filtered_syncd_dir}":
-    message => "test ${filtered_syncd_dir}";
-  }
+  # create an array with all the clients IPs
+  $clients_array = $sync_dir.map |$items, $values| { $values['client_list'] }
+  $joined_array = join($clients_array)
+  $cleaned_array = regsubst($joined_array, /\((.+?)\)/, 'SEP', 'G')
+  $ip_array = split($cleaned_array, 'SEP')
 
   $nodes_ips = concat($nodes_ip4, $nodes_ip6)
   $peer_ip = delete($nodes_ip4, $::ipaddress)
+
+  $ip_array.each | String $client_ip | {
+    if ':' in $client_ip { $provider = 'ip6tables' } else { $provider = 'iptables' }
+    firewall {
+      "200 allow inbound UDP to port 111 from ${client_ip} for provider ${provider}":
+        chain       => 'OUTPUT',
+        action      => accept,
+        destination => $client_ip,
+        provider    => $provider,
+        proto       => udp,
+        dport       => 30865;
+    }
+  }
 
   $nodes_ips.each | String $node_ip | {
     if ':' in $node_ip { $provider = 'ip6tables' } else { $provider = 'iptables' }
