@@ -15,8 +15,8 @@ describe 'tiny_nas' do
           },
           'puppet_ca' => {
             'client_list' => [
-              '192.168.0.101(rw,insecure,async,no_root_squash)',
               '192.168.0.102(rw,insecure,async,no_root_squash)',
+              '192.168.0.103(rw,insecure,async,no_root_squash)',
               '2001:777:3::13a(rw,insecure,async,no_root_squash)',
             ],
             'dir_watch' => 'false',
