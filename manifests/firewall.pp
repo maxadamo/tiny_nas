@@ -19,12 +19,12 @@ class tiny_nas::firewall (
     if ':' in $client_ip { $provider = 'ip6tables' } else { $provider = 'iptables' }
     firewall {
       "200 allow inbound UDP to port 111 from ${client_ip} for provider ${provider}":
-        chain       => 'OUTPUT',
-        action      => accept,
-        destination => $client_ip,
-        provider    => $provider,
-        proto       => udp,
-        dport       => 111;
+        chain    => 'INPUT',
+        action   => accept,
+        source   => $client_ip,
+        provider => $provider,
+        proto    => udp,
+        dport    => 111;
     }
   }
 
