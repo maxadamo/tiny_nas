@@ -19,7 +19,7 @@ class tiny_nas::keepalived (
 
   $keepalived_state = $nodes_ip4[0] ? {
     $::ipaddress => 'MASTER',
-    default      => 'SLAVE'
+    default      => 'BACKUP'
   }
   $keepalived_priority = $nodes_ip4[0] ? {
     $::ipaddress => '100',
