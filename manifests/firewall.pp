@@ -18,20 +18,20 @@ class tiny_nas::firewall (
   $ip_array.each | String $client_ip | {
     if ':' in $client_ip { $provider = 'ip6tables' } else { $provider = 'iptables' }
     firewall {
-      "200 allow inbound UDP to port 111, 2049, 55314 from ${client_ip} for provider ${provider}":
+      "200 allow inbound UDP to port 111, 2049, 4045, 10050 from ${client_ip} for provider ${provider}":
         chain    => 'INPUT',
         action   => accept,
         source   => $client_ip,
         provider => $provider,
         proto    => udp,
-        dport    => [111, 2049, 55314];
-      "200 allow inbound TCP to port 111, 2049, 34135 from ${client_ip} for provider ${provider}":
+        dport    => [111, 2049, 4045, 10050];
+      "200 allow inbound TCP to port 111, 2049, 4045, 10050 from ${client_ip} for provider ${provider}":
         chain    => 'INPUT',
         action   => accept,
         source   => $client_ip,
         provider => $provider,
         proto    => tcp,
-        dport    => [111, 2049, 34135];
+        dport    => [111, 2049, 4045, 10050];
     }
   }
 

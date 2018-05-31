@@ -38,5 +38,10 @@ class tiny_nas::params {
   }
   $cron_sync_minute = '*/3'
 
+  $nfs_server_config = $::osfamily ? {
+    'Debian' => '/etc/default/nfs-kernel-server',
+    'RedHat' => '/etc/sysconfig/nfs'
+  }
+
 }
 # vim:ts=2:sw=2

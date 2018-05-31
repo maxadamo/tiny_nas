@@ -1,6 +1,7 @@
 # == Class: tiny_nas::files
 #
 class tiny_nas::files (
+  $nfs_server_config,
   $use_lsyncd,
   $nodes_hostnames,
   $sync_dir,
@@ -84,6 +85,8 @@ class tiny_nas::files (
       mode    => '0755',
       require => Class['keepalived'],
       source  => "puppet:///modules/${module_name}/keepalived-up.sh";
+    $nfs_server_config:
+      source => "puppet:///modules/${module_name}/${nfs_server_config}";
   }
 
   # work-around for centos 7
@@ -100,6 +103,16 @@ class tiny_nas::files (
       path    => '/usr/bin:/usr/sbin:/bin',
       creates => "${nas_root}/${sync_directory}",
       notify  => Service['nfs-server'];
+    }
+  }
+
+  if $::osfamily == 'Debian' {
+    file_line { 'modprobe_options':
+      ensure  => present,
+      line    => 'options lockd nlm_udpport=4045 nlm_tcpport=4045',
+      path    => ' /etc/modprobe.d/options.conf',
+      match   => '.*lockd',
+      replace => true, # 'true' or 'false'
     }
   }
 

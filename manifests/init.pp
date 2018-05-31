@@ -115,6 +115,7 @@ class tiny_nas (
   Optional[Integer[1, default]] $lv_size = $::tiny_nas::params::lv_size,
   Optional[String] $vg_name              = $::tiny_nas::params::vg_name,
   Optional[String] $cron_sync_minute     = $::tiny_nas::params::sync_group,
+  String $nfs_server_config              = $::tiny_nas::params::nfs_server_config
 
   ) inherits tiny_nas::params {
 
@@ -153,6 +154,7 @@ class tiny_nas (
       nodes_ip4       => $nodes_ip4,
       nodes_ip6       => $nodes_ip6;
     'tiny_nas::files':
+      nfs_server_config    => $nfs_server_config,
       use_lsyncd           => $use_lsyncd,
       sync_group           => $sync_group,
       sync_dir             => $sync_dir,
