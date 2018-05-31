@@ -17,6 +17,15 @@ class tiny_nas::keepalived (
     fail('$vip_ip6_subnet is set but $vip_ip6 is not set')
   }
 
+  $keepalived_state = $nodes_ip4[0] ? {
+    $::ipaddress => 'MASTER',
+    default      => 'SLAVE'
+  }
+  $keepalived_priority = $nodes_ip4[0] ? {
+    $::ipaddress => '100',
+    default      => '50'
+  }
+
   $peer_ip4 = delete($nodes_ip4, $::ipaddress)
   $_peer_host = delete($nodes_hostnames, [$::hostname, $::fqdn])
   $peer_host = regsubst($_peer_host, ".${::domain}", '')
@@ -32,11 +41,11 @@ class tiny_nas::keepalived (
     $peer_ip6 = delete($nodes_ip6, $::ipaddress6)
     keepalived::vrrp::instance { 'NFS':
       interface                  => $network_interface,
-      state                      => 'BACKUP',
+      state                      => $keepalived_state,
       virtual_router_id          => '50',
       unicast_source_ip          => $::ipaddress,
       unicast_peers              => [$peer_ip4[0]],
-      priority                   => '100',
+      priority                   => $keepalived_priority,
       auth_type                  => 'PASS',
       auth_pass                  => 'secret',
       virtual_ipaddress          => "${vip_ip4}/${vip_ip4_subnet}",
