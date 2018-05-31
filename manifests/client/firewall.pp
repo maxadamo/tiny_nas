@@ -2,7 +2,7 @@
 #
 class tiny_nas::client::firewall {
 
-  ['iptables', 'ip6tables'].each | String $provider {
+  ['iptables', 'ip6tables'].each | String $provider | {
     firewall {
       "200 allow outbound UDP to port 111, 2049, 4045, 10050 for provider ${provider}":
         chain    => 'OUTPUT',
