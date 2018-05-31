@@ -110,7 +110,7 @@ class tiny_nas::files (
     file_line { 'modprobe_options':
       ensure  => present,
       line    => 'options lockd nlm_udpport=4045 nlm_tcpport=4045',
-      path    => ' /etc/modprobe.d/options.conf',
+      path    => '/etc/modprobe.d/options.conf',
       match   => '.*lockd',
       replace => true, # 'true' or 'false'
     }
