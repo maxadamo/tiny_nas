@@ -107,7 +107,8 @@ class tiny_nas::files (
   }
 
   if $::osfamily == 'Debian' {
-    file_line { 'modprobe_options':
+    file { '/etc/modprobe.d/options.conf': ensure => file; }
+    -> file_line { 'modprobe_options':
       ensure  => present,
       line    => 'options lockd nlm_udpport=4045 nlm_tcpport=4045',
       path    => '/etc/modprobe.d/options.conf',
