@@ -8,6 +8,7 @@ class tiny_nas::client::client {
   class { '::nfs':
     server_enabled => false,
     client_enabled => true,
+    nfs_v4_client  => false;
   }
 
 }
