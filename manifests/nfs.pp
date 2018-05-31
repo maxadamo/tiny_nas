@@ -7,7 +7,8 @@ class tiny_nas::nfs (
 ) {
 
   class { '::nfs':
-    server_enabled => true;
+    server_enabled => true,
+    nfs_v4         => false;
   }
 
   $sync_dir.each | String $exported_dir, $client_array | {
