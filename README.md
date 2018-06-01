@@ -11,8 +11,8 @@
 
 ## Description
 
-Tiny_NAS sets up a tiny, low-end Highly-Available NAS with two ways synchronization.
-tiny_nas works in two ways. Directories can be either:
+Tiny_NAS sets up a tiny, low-end and Highly-Available NAS with two ways synchronization.
+Tiny_nas works in two ways. Directories can be either:
 
 * watched and immediately synchronized based on kernel events
 * synchronized through a cron job
@@ -22,6 +22,8 @@ You can have a combination of them (some directories watched, other directories 
 No ZFS. Tiny NAS is tiny, and it doesn't need a fancy filesystem nor complex volume management.
 It allows to use LVM through the options mentioned in `init.pp`.
 If you intend to use ZFS, disable LVM management, and add the ZFS volume yourself.
+
+No NFS4. Tiny NAS is tiny and the security is based on the IP (managed throught the firewall)
 
 Tiny NAS is low-end by design.
 If you have a huge amount of files and the files are changing frequently neither lscyncd + csync2 nor scheduled job are a proper solution and you should look in to clustered filesystems.
@@ -96,7 +98,7 @@ If can also use templates for the keys:
 
 It is untested on more then two hosts.
 It is untested without IPv6.
-Not sure yet what to do with some Keepalived paramter
+It is not test very will on CentOS
 
 ## Development
 
