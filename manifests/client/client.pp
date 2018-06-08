@@ -5,9 +5,11 @@ class tiny_nas::client::client {
 
   include ::tiny_nas::client::firewall
 
-  class { '::nfs':
-    server_enabled => false,
-    client_enabled => true,
+  unless defined(Class['::nfs']) {
+    class { '::nfs':
+      server_enabled => false,
+      client_enabled => true,
+    }
   }
 
 }
