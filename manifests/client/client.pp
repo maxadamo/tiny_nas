@@ -10,7 +10,7 @@ class tiny_nas::client::client (
   unless defined(Class['::nfs']) {
     class { '::nfs':
       server_enabled => $nfs_server_enabled,
-      client_enabled => true,
+      client_enabled => true;
     }
   }
 
