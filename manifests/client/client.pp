@@ -2,10 +2,13 @@
 #
 #
 class tiny_nas::client::client (
-  $nfs_server_enabled = false
+  $nfs_server_enabled = false,
+  $ipv6_enabled = true
 ) {
 
-  include ::tiny_nas::client::firewall
+  class { '::tiny_nas::client::firewall':
+    ipv6_enabled => $ipv6_enabled;
+  }
 
   unless defined(Class['::nfs']) {
     class { '::nfs':
