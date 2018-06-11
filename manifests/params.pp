@@ -15,6 +15,7 @@ class tiny_nas::params {
   $network_interface = 'eth0'
   $nas_root = '/nas'
   $manage_lvm = undef
+  $manage_firewall = true
   $lv_size = undef
   $vg_name = undef
   $sync_dir = {}

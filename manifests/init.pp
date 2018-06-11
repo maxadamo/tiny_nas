@@ -56,6 +56,9 @@
 # [*manage_lvm*] <Boolean>
 #   default: false (wheter to manage LVM or not)
 #
+# [*manage_firewall*] <Boolean>
+#   default: true (wheter to manage iptables firewall or not)
+#
 # [*lv_size*] <Integer>
 #   default: undef (LV size in GB: minimum 1)
 #
@@ -107,6 +110,7 @@ class tiny_nas (
   Optional[String] $vip_ip6_subnet       = $::tiny_nas::params::vip_ip6_subnet,
   String $nas_root                       = $::tiny_nas::params::nas_root,
   Optional[Boolean] $manage_lvm          = $::tiny_nas::params::manage_lvm,
+  Optional[Boolean] $manage_firewall     = $::tiny_nas::params::manage_firewall,
   Optional[Integer[1, default]] $lv_size = $::tiny_nas::params::lv_size,
   Optional[String] $vg_name              = $::tiny_nas::params::vg_name,
   Optional[String] $cron_sync_minute     = $::tiny_nas::params::cron_sync_minute,
@@ -132,6 +136,14 @@ class tiny_nas (
     fail('please provide a value for $csync2_preshared_key')
   }
 
+  if any2bool($manage_firewall) == true {
+    class { 'tiny_nas::firewall':
+      sync_dir  => $sync_dir,
+      nodes_ip4 => $nodes_ip4,
+      nodes_ip6 => $nodes_ip6;
+    }
+  }
+
   class {
     'tiny_nas::lvm':
       nas_root   => $nas_root,
@@ -139,10 +151,6 @@ class tiny_nas (
       lv_size    => $lv_size,
       vg_name    => $vg_name,
       before     => Class['tiny_nas::files'];
-    'tiny_nas::firewall':
-      sync_dir  => $sync_dir,
-      nodes_ip4 => $nodes_ip4,
-      nodes_ip6 => $nodes_ip6;
     'tiny_nas::service':
       use_lsyncd      => $use_lsyncd,
       lsyncd_packages => $lsyncd_packages,
