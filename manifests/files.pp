@@ -48,7 +48,10 @@ class tiny_nas::files (
       user    => 'root',
       minute  => $cron_sync_minute;
     }
-  } else { $nas_async = false }
+  } else {
+    $nas_async = false
+    file { '/etc/csync2_nasasync.cfg': ensure  => absent; }
+  }
 
   file {
     default:
