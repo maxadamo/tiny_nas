@@ -5,6 +5,6 @@ while pgrep -f lsyncd; do
   systemctl stop lsyncd.service
 done
 
-<% if @nas_async == false %>/usr/sbin/csync2 -C nasasync -x
+<% if @nas_async == true %>/usr/sbin/csync2 -C nasasync -x
 <% end -%>
 /usr/sbin/csync2 -C nas -x
