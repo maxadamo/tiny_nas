@@ -5,7 +5,6 @@
 1. [Description](#description)
     * [Setup requirements](#setup-requirements)
 1. [Usage - Configuration options and additional functionality](#usage)
-1. [Reference - An under-the-hood peek at what the module is doing and how](#reference)
 1. [Limitations - OS compatibility, etc.](#limitations)
 1. [Development - Guide for contributing to the module](#development)
 
@@ -23,10 +22,10 @@ No ZFS. Tiny NAS is tiny, and it doesn't need a fancy filesystem nor complex vol
 It allows to use LVM through the options mentioned in `init.pp`.
 If you intend to use ZFS, disable LVM management, and add the ZFS volume yourself.
 
-No NFS4. Tiny NAS is tiny and the security is based on the IP (managed throught the firewall)
+No NFS4. Tiny NAS is tiny and the security is based on the IP (managed throught the firewall module)
 
 Tiny NAS is low-end by design.
-If you have a huge amount of files and the files are changing frequently neither lscyncd + csync2 nor scheduled job are a proper solution and you should look in to clustered filesystems.
+If you have a high load on you NAS neither lscyncd + csync2 nor scheduled job are a proper solution and you should consider a clustered filesystems.
 
 ### Setup Requirements
 
@@ -68,7 +67,6 @@ sync_dir:
 
 ```puppet
 class { 'tiny_nas':
-  sync_group           => 'nas',
   sync_dir             => lookup('sync_dir'),
   nodes_hostnames      => ['nas01.example.org', 'nas02.example.org'],
   nodes_ip4            => ['192.168.0.48', '192.168.0.49'],

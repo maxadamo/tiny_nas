@@ -1,7 +1,6 @@
 #
 #
 class { 'tiny_nas':
-  sync_group           => 'puppet_ca',
   sync_dir             => ['/etc/puppetlabs/puppet/ssl'],
   nodes_hostname       => ['puppet02.domain.org', 'puppet03.domain.org'],
   nodes_ip4            => ['192.168.0.10', '192.168.0.11'],

@@ -14,7 +14,6 @@ class tiny_nas::files (
   $lsyncd_packages  = $::tiny_nas::params::lsyncd_packages,
   $lsyncd_conf_dir  = $::tiny_nas::params::lsyncd_conf_dir,
   $lsyncd_conf      = $::tiny_nas::params::lsyncd_conf,
-  $sync_group       = $::tiny_nas::params::sync_group,
   $cron_sync_minute = $::tiny_nas::params::cron_sync_minute,
   ) inherits tiny_nas::params {
 
@@ -35,7 +34,8 @@ class tiny_nas::files (
   }
 
   if ! empty($unfiltered_syncd_dir_array) {
-    file { "/etc/csync2_${sync_group}async.cfg":
+    $nas_async = true
+    file { '/etc/csync2_nasasync.cfg':
       ensure  => file,
       owner   => root,
       group   => root,
@@ -44,10 +44,13 @@ class tiny_nas::files (
       content => template("${module_name}/csync2async.cfg.erb");
     }
     cron { 'csync2_async':
-      command => "pgrep -f lsyncd >/dev/null && /usr/sbin/csync2 -C ${sync_group}async -x",
+      command => 'pgrep -f lsyncd >/dev/null && /usr/sbin/csync2 -C nasasync -x',
       user    => 'root',
       minute  => $cron_sync_minute;
     }
+  } else {
+    $nas_async = false
+    file { '/etc/csync2_nasasync.cfg': ensure  => absent; }
   }
 
   file {
@@ -62,9 +65,9 @@ class tiny_nas::files (
       notify  => Service['lsyncd'],
       require => File[$lsyncd_conf_dir],
       content => template("${module_name}/lsyncd.conf.erb");
-    "/etc/csync2_${sync_group}.cfg":
+    '/etc/csync2_nas.cfg':
       content => template("${module_name}/csync2.cfg.erb");
-    "/etc/csync2_${sync_group}-group.key":
+    '/etc/csync2_nas-group.key':
       mode    => '0640',
       content => $csync2_preshared_key;
     '/etc/csync2_ssl_cert.pem':
@@ -113,7 +116,7 @@ class tiny_nas::files (
       line    => 'options lockd nlm_udpport=4045 nlm_tcpport=4045',
       path    => '/etc/modprobe.d/options.conf',
       match   => '.*lockd',
-      replace => true, # 'true' or 'false'
+      replace => true;
     }
   }
 

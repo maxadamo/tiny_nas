@@ -3,7 +3,6 @@ describe 'tiny_nas' do
   context 'with default values for all parameters' do
     let(:params) do
       {
-        'sync_group' => 'nas',
         'sync_dir ' => {
           'moodledata' => {
             'client_list' => [

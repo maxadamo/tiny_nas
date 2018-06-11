@@ -13,7 +13,6 @@ class tiny_nas::params {
   $nodes_ip6 = []
   $nodes_hostnames = []
   $network_interface = 'eth0'
-  $sync_group = 'main'
   $nas_root = '/nas'
   $manage_lvm = undef
   $lv_size = undef
