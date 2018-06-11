@@ -1,10 +1,10 @@
 lock-timeout 60;
 
-group <%= @sync_group %> {
+group nas {
 <% @nodes_hostnames.each do |this_node| -%>
     host <%= this_node.gsub(/\.(.*)/,'') %>;
 <% end -%>
-    key /etc/csync2_<%= @sync_group %>-group.key;
+    key /etc/csync2_nas-group.key;
 
 <% @unfiltered_syncd_dir_array.each do |include_dir| -%>
     include <%= @nas_root %>/<%= include_dir %>;

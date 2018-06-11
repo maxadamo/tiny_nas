@@ -23,9 +23,6 @@
 # [*nodes_hostnames*] <Array>
 #   default: empty (list of servers hostnames). Mandatory.
 #
-# [*sync_group*] <String>
-#   default: 'main' (name for the synchronizazion group). Optional.
-#
 # [*sync_dir*] <Hash>
 #   default: empty (
 #            hash of directories associated to clients who gain access
@@ -69,7 +66,6 @@
 # --------
 #
 # class { 'tiny_nas':
-#   sync_group           => 'puppet_ca',
 #   sync_dir             => ['/etc/puppetlabs/puppet/ssl'],
 #   nodes_hostnames       => ['puppet02.domain.org', 'puppet03.domain.org'],
 #   nodes_ip4            => ['192.168.0.10', '192.168.0.11'],
@@ -94,7 +90,6 @@ class tiny_nas (
   Boolean $use_lsyncd                    = $::tiny_nas::params::use_lsyncd,
   String $lsyncd_conf                    = $::tiny_nas::params::lsyncd_conf,
   String $lsyncd_conf_dir                = $::tiny_nas::params::lsyncd_conf_dir,
-  String $sync_group                     = $::tiny_nas::params::sync_group,
   Hash $sync_dir                         = $::tiny_nas::params::sync_dir,
   Array $sync_exclude                    = $::tiny_nas::params::sync_exclude,
   String $csync2_ssl_key                 = $::tiny_nas::params::csync2_ssl_key,
@@ -114,7 +109,7 @@ class tiny_nas (
   Optional[Boolean] $manage_lvm          = $::tiny_nas::params::manage_lvm,
   Optional[Integer[1, default]] $lv_size = $::tiny_nas::params::lv_size,
   Optional[String] $vg_name              = $::tiny_nas::params::vg_name,
-  Optional[String] $cron_sync_minute     = $::tiny_nas::params::sync_group,
+  Optional[String] $cron_sync_minute     = $::tiny_nas::params::cron_sync_minute,
   String $nfs_server_config              = $::tiny_nas::params::nfs_server_config
 
   ) inherits tiny_nas::params {
@@ -156,7 +151,6 @@ class tiny_nas (
     'tiny_nas::files':
       nfs_server_config    => $nfs_server_config,
       use_lsyncd           => $use_lsyncd,
-      sync_group           => $sync_group,
       sync_dir             => $sync_dir,
       sync_exclude         => $sync_exclude,
       csync2_ssl_key       => $csync2_ssl_key,
