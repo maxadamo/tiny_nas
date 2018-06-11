@@ -1,8 +1,6 @@
 # == Class: tiny_nas::client::firewall
 #
-class tiny_nas::client::firewall (
-  $ipv6_enabled,
-) {
+class tiny_nas::client::firewall ($ipv6_enabled) {
 
   if any2bool($ipv6_enabled) == true {
     ['iptables', 'ip6tables'].each | String $provider | {

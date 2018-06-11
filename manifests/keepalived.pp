@@ -9,7 +9,7 @@ class tiny_nas::keepalived (
   $nodes_ip6 = [],
   $vip_ip6 = undef,
   $vip_ip6_subnet = undef,
-  ) inherits tiny_nas::params {
+) inherits tiny_nas::params {
 
   if ($vip_ip6) and !($vip_ip6_subnet) {
     fail('$vip_ip6 is set but $vip_ip6_subnet is not set')

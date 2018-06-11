@@ -3,7 +3,7 @@
 #
 class tiny_nas::client::client (
   $nfs_server_enabled = false,
-  $ipv6_enabled = true
+  $ipv6_enabled       = true
 ) {
 
   class { '::tiny_nas::client::firewall':

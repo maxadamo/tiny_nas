@@ -112,7 +112,7 @@ class tiny_nas (
   Optional[String] $cron_sync_minute     = $::tiny_nas::params::cron_sync_minute,
   String $nfs_server_config              = $::tiny_nas::params::nfs_server_config
 
-  ) inherits tiny_nas::params {
+) inherits tiny_nas::params {
 
   if empty($nodes_hostnames) {
     fail('please provide values for the array $nodes_hostnames')

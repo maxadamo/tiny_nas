@@ -4,7 +4,7 @@ class tiny_nas::firewall (
   $sync_dir,
   $nodes_ip4,
   $nodes_ip6 = []
-  ) {
+) {
 
   # create an array with all the clients IPs
   $clients_array = $sync_dir.map |$items, $values| { $values['client_list'] }
