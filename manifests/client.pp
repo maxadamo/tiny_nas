@@ -3,6 +3,7 @@
 define tiny_nas::client (
   $server,
   $share,
+  $ensure             = present,
   $mount_point        = $name,
   $nfs_server_enabled = false,
   $manage_firewall    = true,
@@ -18,10 +19,20 @@ define tiny_nas::client (
     }
   }
 
+  if $ensure == present {
+    $client_ensure = present
+  } elsif $ensure == absent {
+    $client_ensure = absent
+  } else {
+    fail("ensure can only be 'present' or 'absent'")
+  }
+
+
   $stripped_mount_point = regsubst($mount_point, '/', '_', 'G')
   $script_name = "/usr/local/sbin/fix_stale_mount${stripped_mount_point}.sh"
 
   tiny_nas::client::client { $mount_point:
+    ensure               => $client_ensure,
     stripped_mount_point => $stripped_mount_point,
     script_name          => $script_name,
     nfs_server_enabled   => $nfs_server_enabled,
