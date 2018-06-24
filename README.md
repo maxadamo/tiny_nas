@@ -116,7 +116,9 @@ Please check `manifests/client.pp` for other available options.
 ## Limitations
 
 It is untested on more then two hosts.
+
 It is untested without IPv6.
+
 It is not tested very well on CentOS
 
 ## Development
