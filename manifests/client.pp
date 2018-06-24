@@ -1,10 +1,13 @@
 # == Define: tiny_nas::client
 #
 define tiny_nas::client (
+  $server,
+  $share,
   $mount_point        = $name,
   $nfs_server_enabled = false,
   $manage_firewall    = true,
-  $ipv6_enabled       = true
+  $ipv6_enabled       = true,
+  $options_nfs        = 'tcp,soft,nolock,rsize=32768,wsize=32768,intr,noatime,actimeo=3',
 ) {
 
   if any2bool($manage_firewall) == true {
@@ -22,6 +25,9 @@ define tiny_nas::client (
     stripped_mount_point => $stripped_mount_point,
     script_name          => $script_name,
     nfs_server_enabled   => $nfs_server_enabled,
+    server               => $server,
+    share                => $share,
+    options_nfs          => $options_nfs;
   }
 
 }

@@ -3,7 +3,10 @@
 define tiny_nas::client::client (
   $nfs_server_enabled,
   $stripped_mount_point,
+  $options_nfs,
   $script_name,
+  $server,
+  $share,
   $mount_point = $name,
 ) {
 
@@ -20,7 +23,7 @@ define tiny_nas::client::client (
   }
 
   cron { $stripped_mount_point:
-    command => $script_name,
+    command => "flock /tmp/fix_stale_mount.lock ${script_name}",
     user    => 'root',
   }
 
@@ -29,6 +32,14 @@ define tiny_nas::client::client (
       server_enabled => $nfs_server_enabled,
       client_enabled => true;
     }
+  }
+
+  nfs::client::mount { $mount_point:
+    ensure      => mounted,
+    server      => $server,
+    share       => $share,
+    options_nfs => $options_nfs,
+    require     => Class['::nfs'];
   }
 
 }
