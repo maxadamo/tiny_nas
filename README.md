@@ -45,6 +45,8 @@ You can either store the values in Hiera or they can be provided as templates.
 
 ## Usage
 
+### Server setup
+
 This is all you need (ipv6 is optional):
 
 ```yaml
@@ -92,11 +94,30 @@ If can also use templates for the keys:
   csync2_preshared_key => template('mymodule/preshared_key'),
 ```
 
+### Client setup
+
+```puppet
+tiny_nas::client { '/etc/puppetlabs/pupet/ssl':
+  ensure             => present,
+  nfs_server_enabled => true,
+  server             => 'nas.example.org',
+  share              => '/nas/puppet_ca';
+}
+```
+
+nfs options default is:
+
+```puppet
+options_nfs => 'tcp,soft,nolock,rsize=32768,wsize=32768,intr,noatime,actimeo=3'
+```
+
+Please check `manifests/client.pp` for other available options.
+
 ## Limitations
 
 It is untested on more then two hosts.
 It is untested without IPv6.
-It is not test very will on CentOS
+It is not tested very well on CentOS
 
 ## Development
 

@@ -1,5 +1,32 @@
 # == Define: tiny_nas::client
 #
+# === Parameters & Variables
+#
+# [*server*] <String>
+#            Server VIP
+#
+# [*share*] <String>
+#           shared folder on the server
+#
+# [*ensure*] <Bool>
+#   default: present (valid values: present and absent)
+#
+# [*mount_point*] <String>
+#   default: $name (mount point)
+#
+# [*nfs_server_enabled*] <Bool>
+#   default: false (whether nfs server should be enabled or not)
+#
+# [*manage_firewall*] <Bool>
+#   default: true (manage iptables on the client)
+#
+# [*ipv6_enabled*] <Bool>
+#   default: true (enable ipv6)
+#
+# [*options_nfs*] <String>
+#   default: 'tcp,soft,nolock,rsize=32768,wsize=32768,intr,noatime,actimeo=3'
+#            NFS client options
+#
 define tiny_nas::client (
   $server,
   $share,
