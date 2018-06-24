@@ -26,7 +26,7 @@ define tiny_nas::client::client (
   cron { $stripped_mount_point:
     ensure  => $ensure,
     command => "flock /tmp/fix_stale_mount.lock ${script_name}",
-    user    => 'root',
+    user    => 'root';
   }
 
   unless defined(Class['::nfs']) {
