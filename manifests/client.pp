@@ -16,7 +16,7 @@ define tiny_nas::client (
   }
 
   $stripped_mount_point = regsubst($mount_point, '/', '_', 'G')
-  $script_name = "/usr/local/sbin/fix_stale_mount_${stripped_mount_point}.sh"
+  $script_name = "/usr/local/sbin/fix_stale_mount${stripped_mount_point}.sh"
 
   tiny_nas::client::client { $mount_point:
     stripped_mount_point => $stripped_mount_point,
