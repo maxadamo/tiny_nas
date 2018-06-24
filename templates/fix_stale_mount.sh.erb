@@ -1,0 +1,9 @@
+#!/bin/bash
+#
+PATH=/usr/bin:/usr/sbin:/bin:/usr/local/bin
+export PATH
+
+if ls <%= @mount_point %> | grep -qi "stale file handle"; then
+  umount -l <%= @mount_point %>
+  mount <%= @mount_point %>
+fi
