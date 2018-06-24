@@ -2,6 +2,10 @@
 #
 class tiny_nas::client::firewall ($ipv6_enabled) {
 
+  if $caller_module_name != $module_name {
+    fail("this define is intended to be called only within ${module_name}")
+  }
+
   if any2bool($ipv6_enabled) == true {
     ['iptables', 'ip6tables'].each | String $provider | {
       firewall {
