@@ -12,11 +12,11 @@ define tiny_nas::client::client (
   }
 
   file { $script_name:
-    ensure => file,
-    owner  => root,
-    group  => root,
-    mode   => '0754',
-    conten => template("${module_name}/fix_stale_mount.sh.erb");
+    ensure  => file,
+    owner   => root,
+    group   => root,
+    mode    => '0754',
+    content => template("${module_name}/fix_stale_mount.sh.erb");
   }
 
   cron { $stripped_mount_point:
