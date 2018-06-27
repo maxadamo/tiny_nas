@@ -1,6 +1,6 @@
 ---
 pdk_validate:
-  script: "pdk validate"
+  script: "pdk validate manifests templates"
 
 pdk_unit_test:
   script: "pdk test unit"
