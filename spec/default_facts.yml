@@ -4,8 +4,5 @@
 ---
 concat_basedir: "/tmp"
 ipaddress: "172.16.254.254"
-ipaddress6: "2a00:1450:400e:808::2004"
 is_pe: false
 macaddress: "AA:AA:AA:AA:AA:AA"
-osfamily: "Debian"
-lsbdistcodename: "xenial"
