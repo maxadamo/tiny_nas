@@ -1,6 +1,14 @@
 ---
-pdk_validate:
-  script: "pdk validate"
+stages:
+  - syntax
+  - unit
 
-pdk_unit_test:
-  script: "pdk test unit"
+run_validation:
+  stage: syntax
+  script:
+    - pdk validate
+
+run_unit_test:
+  stage: unit
+  script:
+    - pdk test unit
