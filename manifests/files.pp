@@ -75,6 +75,9 @@ class tiny_nas::files (
     '/etc/csync2_ssl_key.pem':
       mode    => '0640',
       content => $csync2_ssl_key;
+    '/etc/logrotate.d/lsync':
+      mode   => '0644',
+      source => "puppet:///modules/${module_name}/logrotate_lsync";
     [
       '/var/log/csync2', '/var/log/csync2/sync-conflicts',
       '/var/log/lsyncd', $lsyncd_conf_dir
