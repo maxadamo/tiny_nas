@@ -15,7 +15,7 @@ class tiny_nas::files (
   $lsyncd_conf_dir  = $::tiny_nas::params::lsyncd_conf_dir,
   $lsyncd_conf      = $::tiny_nas::params::lsyncd_conf,
   $cron_sync_minute = $::tiny_nas::params::cron_sync_minute,
-  ) inherits tiny_nas::params {
+) inherits tiny_nas::params {
 
   if any2bool($use_lsyncd) == true {
     $all_packages = concat($csync_packages, $lsyncd_packages)
