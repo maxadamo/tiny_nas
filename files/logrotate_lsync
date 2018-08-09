@@ -1,0 +1,18 @@
+/var/log/lsyncd/lsyncd.log {
+    missingok
+    notifempty
+    sharedscripts
+    rotate 10
+    compress
+    size 20M
+}
+
+/var/log/lsyncd/status.log {
+    missingok
+    notifempty
+    sharedscripts
+    rotate 10
+    compress
+    size 20M
+}
+
