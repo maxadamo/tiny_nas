@@ -22,8 +22,8 @@ class tiny_nas::keepalived (
     default      => 'BACKUP'
   }
   $keepalived_priority = $nodes_ip4[0] ? {
-    $::ipaddress => '100',
-    default      => '50'
+    $::ipaddress => 100,
+    default      => 50
   }
 
   $peer_ip4 = delete($nodes_ip4, $::ipaddress)
@@ -33,8 +33,8 @@ class tiny_nas::keepalived (
 
   keepalived::vrrp::script { 'check_nfs':
     script   => 'killall -0 nfsd',
-    interval => '2',
-    weight   => '2';
+    interval => 2,
+    weight   => 2;
   }
 
   if ($vip_ip6) {
@@ -42,7 +42,7 @@ class tiny_nas::keepalived (
     keepalived::vrrp::instance { 'NFS':
       interface                  => $network_interface,
       state                      => $keepalived_state,
-      virtual_router_id          => '50',
+      virtual_router_id          => 50,
       unicast_source_ip          => $::ipaddress,
       unicast_peers              => [$peer_ip4[0]],
       priority                   => $keepalived_priority,
