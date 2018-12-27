@@ -58,10 +58,10 @@ class tiny_nas::keepalived (
     keepalived::vrrp::instance { 'NFS':
       interface            => $network_interface,
       state                => 'BACKUP',
-      virtual_router_id    => '50',
+      virtual_router_id    => 50,
       unicast_source_ip    => $::ipaddress,
       unicast_peers        => [$peer_ip4[0]],
-      priority             => '100',
+      priority             => 100,
       auth_type            => 'PASS',
       auth_pass            => 'secret',
       virtual_ipaddress    => "${vip_ip4}/${vip_ip4_subnet}",
