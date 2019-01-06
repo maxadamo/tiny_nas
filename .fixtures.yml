@@ -10,7 +10,7 @@ fixtures:
   forge_modules:
     nfs:
       repo: "derdanne-nfs"
-      ref: "2.0.8"
+      ref: "2.0.10"
     concat:
       repo: "puppetlabs-concat"
       ref: "4.2.1"

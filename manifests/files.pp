@@ -103,7 +103,7 @@ class tiny_nas::files (
     onlyif  => 'test -f /usr/lib64/libsqlite3.so.0.8.6';
   }
 
-  $service_name = $facts['os']['family'] ? {
+  $service_name = $::osfamily ? {
     'Debian' => 'nfs-kernel-server',
     'RedHat' => 'nfs-server'
   }
