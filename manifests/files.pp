@@ -103,12 +103,17 @@ class tiny_nas::files (
     onlyif  => 'test -f /usr/lib64/libsqlite3.so.0.8.6';
   }
 
+  $service_name = $facts['os']['faily'] ? {
+    'Debian' => 'nfs-kernel-server',
+    'RedHat' => 'nfs-server'
+  }
+
   $sync_dir_array.each | String $sync_directory | {
     exec { "create_sync_dir_${sync_directory}":
       command => "install -d ${nas_root}/${sync_directory}",
       path    => '/usr/bin:/usr/sbin:/bin',
       creates => "${nas_root}/${sync_directory}",
-      notify  => Service['nfs-server'];
+      notify  => Service[$service_name];
     }
   }
 
