@@ -1,6 +1,6 @@
 {
   "name": "maxadamo-tiny_nas",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "author": "maxadamo",
   "summary": "Tiny NAS: a Tiny Highly-Avalaible NAS Appliance",
   "license": "GPL-3.0",
@@ -10,23 +10,23 @@
   "dependencies": [
     {
       "name": "derdanne-nfs",
-      "version_requirement": ">= 2.0.8 <= 2.0.8"
+      "version_requirement": ">= 2.0.8 <= 2.1.2"
     },
     {
       "name": "puppetlabs-firewall",
-      "version_requirement": ">= 1.9.0 <= 1.9.0"
+      "version_requirement": ">= 1.9.0 <= 1.15.2"
     },
     {
       "name": "puppetlabs-cron_core",
-      "version_requirement": ">= 1.0.0 <= 1.0.0"
+      "version_requirement": ">= 1.0.0 <= 1.0.1"
     },
     {
       "name": "puppetlabs-mount_core",
-      "version_requirement": ">= 1.0.0 <= 1.0.2"
+      "version_requirement": ">= 1.0.0 <= 1.0.3"
     },
     {
       "name": "puppetlabs-xinetd",
-      "version_requirement": ">= 3.0.0 <= 3.0.0"
+      "version_requirement": ">= 3.0.0 <= 3.2.0"
     }
   ],
   "data_provider": "hiera",
