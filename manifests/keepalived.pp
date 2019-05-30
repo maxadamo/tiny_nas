@@ -42,7 +42,7 @@ class tiny_nas::keepalived (
     keepalived::vrrp::instance { 'NFS':
       interface                  => $network_interface,
       state                      => $keepalived_state,
-      virtual_router_id          => 50,
+      virtual_router_id          => seeded_rand(255, "${module_name}${::environment}") + 0,
       unicast_source_ip          => $::ipaddress,
       unicast_peers              => [$peer_ip4[0]],
       priority                   => $keepalived_priority,
@@ -58,7 +58,7 @@ class tiny_nas::keepalived (
     keepalived::vrrp::instance { 'NFS':
       interface            => $network_interface,
       state                => 'BACKUP',
-      virtual_router_id    => 50,
+      virtual_router_id    => seeded_rand(255, "${module_name}${::environment}") + 0,
       unicast_source_ip    => $::ipaddress,
       unicast_peers        => [$peer_ip4[0]],
       priority             => 100,
