@@ -9,16 +9,20 @@
   "issues_url": "https://github.com/maxadamo/tiny_nas/issues",
   "dependencies": [
     {
+      "name": "puppet-keepalived",
+      "version_requirement": ">= 2.0.0 <= 2.1.0"
+    },
+    {
       "name": "derdanne-nfs",
       "version_requirement": ">= 2.0.8 <= 2.1.2"
     },
     {
       "name": "puppetlabs-firewall",
-      "version_requirement": ">= 1.9.0 <= 1.15.2"
+      "version_requirement": ">= 1.9.0 <= 2.0.0"
     },
     {
       "name": "puppetlabs-cron_core",
-      "version_requirement": ">= 1.0.0 <= 1.0.1"
+      "version_requirement": ">= 1.0.0 <= 1.0.2"
     },
     {
       "name": "puppetlabs-mount_core",
