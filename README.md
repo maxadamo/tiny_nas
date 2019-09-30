@@ -18,7 +18,7 @@ Tiny_nas works in two ways. Directories can be either:
 
 You can have a combination of them (some directories watched, other directories under cron)
 
-No ZFS. Tiny NAS is tiny, and it doesn't need a fancy filesystem nor complex volume management.
+No ZFS. Tiny NAS is tiny, and it doesn't need a fancy filesystem nor complex volume management (**stay tuned: I am working on a full fledged ZFS HA Nas**).  
 It allows to use LVM through the options mentioned in `init.pp`.
 If you intend to use ZFS, disable LVM management, and add the ZFS volume yourself.
 
