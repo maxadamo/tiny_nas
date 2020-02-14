@@ -1,4 +1,5 @@
 ---
 .gitlab-ci.yml:
   unmanaged: true
+mock_with: ':rspec'
 
