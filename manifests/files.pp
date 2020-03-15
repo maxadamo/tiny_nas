@@ -64,7 +64,10 @@ class tiny_nas::files (
       ensure  => $lsyncd_conf_status,
       notify  => Service['lsyncd'],
       require => File[$lsyncd_conf_dir],
-      content => template("${module_name}/lsyncd.conf.erb");
+      content => epp("${module_name}/lsyncd.conf.epp", {
+        filtered_syncd_dir_array => $filtered_syncd_dir_array,
+        nas_root                 => $nas_root
+      });
     '/etc/csync2_nas.cfg':
       content => template("${module_name}/csync2.cfg.erb");
     '/etc/csync2_nas-group.key':
@@ -86,7 +89,9 @@ class tiny_nas::files (
     '/etc/keepalived/keepalived-down.sh':
       mode    => '0755',
       require => Class['keepalived'],
-      content => template("${module_name}/keepalived-down.sh.erb");
+      content => epp("${module_name}/keepalived-down.sh.epp", {
+        nas_async => $nas_async
+      });
     '/etc/keepalived/keepalived-up.sh':
       mode    => '0755',
       require => Class['keepalived'],

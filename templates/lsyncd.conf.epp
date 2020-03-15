@@ -93,9 +93,9 @@ initSync = {
 }
 
 local sources = {
-<% @filtered_syncd_dir_array.each do |include_dir| -%>
-    ["<%= @nas_root %>/<%= include_dir %>"] = "nas",
-<% end -%>
+<% $filtered_syncd_dir_array.each |$include_dir| { -%>
+    ["<%= $nas_root %>/<%= $include_dir %>"] = "nas",
+<% } -%>
 }
 for key, value in pairs(sources) do
     sync {initSync, source=key, syncid=value}

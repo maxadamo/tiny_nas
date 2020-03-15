@@ -16,7 +16,7 @@ class tiny_nas::firewall (
   $peer_ip = delete($nodes_ip4, $::ipaddress)
 
   $ip_array.each | String $client_ip | {
-    if ':' in $client_ip { $provider = 'ip6tables' } else { $provider = 'iptables' }
+    if $client_ip =~ Stdlib::IP::Address::V6 { $provider = 'ip6tables' } else { $provider = 'iptables' }
     firewall {
       "200 allow inbound UDP to port 111, 892, 2049, 4045 from ${client_ip} for provider ${provider}":
         chain    => 'INPUT',
@@ -36,7 +36,7 @@ class tiny_nas::firewall (
   }
 
   $nodes_ips.each | String $node_ip | {
-    if ':' in $node_ip { $provider = 'ip6tables' } else { $provider = 'iptables' }
+    if $node_ip =~ Stdlib::IP::Address::V6 { $provider = 'ip6tables' } else { $provider = 'iptables' }
     firewall {
       "200 allow outbound TCP to Csync to ${node_ip} for provider ${provider}":
         chain       => 'OUTPUT',

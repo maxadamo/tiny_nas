@@ -20,7 +20,10 @@ define tiny_nas::client::client (
     owner   => root,
     group   => root,
     mode    => '0754',
-    content => template("${module_name}/fix_stale_mount.sh.erb");
+    content => epp("${module_name}/fix_stale_mount.sh.epp", {
+      mount_point => $mount_point,
+      server      => $server
+    });
   }
 
   cron { $stripped_mount_point:
