@@ -52,12 +52,6 @@
       "operatingsystemrelease": [
         "16.04"
       ]
-    },
-    {
-      "operatingsystem": "Ubuntu",
-      "operatingsystemrelease": [
-        "18.04"
-      ]
     }
   ],
   "requirements": [
