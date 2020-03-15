@@ -30,7 +30,7 @@
     },
     {
       "name": "puppetlabs-xinetd",
-      "version_requirement": ">= 3.0.0 <= 3.2.0"
+      "version_requirement": ">= 3.0.0 <= 3.3.0"
     }
   ],
   "data_provider": "hiera",
