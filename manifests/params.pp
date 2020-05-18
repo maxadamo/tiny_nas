@@ -42,10 +42,7 @@ class tiny_nas::params {
     'Debian' => '/etc/default/nfs-kernel-server',
     'RedHat' => '/etc/sysconfig/nfs'
   }
-  $keepalived_sysconf_options = $facts['os']['family'] ? {
-    'Debian' => '',
-    'RedHat' => '-D'
-  }
+  $keepalived_sysconf_options = '-D'
 
 }
 # vim:ts=2:sw=2
