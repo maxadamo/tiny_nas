@@ -1,6 +1,6 @@
 {
   "name": "maxadamo-tiny_nas",
-  "version": "0.5.0",
+  "version": "0.5.5",
   "author": "maxadamo",
   "summary": "Tiny NAS: a Tiny Highly-Avalaible NAS Appliance",
   "license": "GPL-3.0",
@@ -10,7 +10,7 @@
   "dependencies": [
     {
       "name": "puppet-keepalived",
-      "version_requirement": ">= 2.0.0 <= 2.1.0"
+      "version_requirement": ">= 2.0.0 <= 2.2.0"
     },
     {
       "name": "derdanne-nfs",

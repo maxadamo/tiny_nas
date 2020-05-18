@@ -90,31 +90,32 @@
 #
 class tiny_nas (
 
-  Boolean $use_lsyncd                    = $::tiny_nas::params::use_lsyncd,
-  String $lsyncd_conf                    = $::tiny_nas::params::lsyncd_conf,
-  String $lsyncd_conf_dir                = $::tiny_nas::params::lsyncd_conf_dir,
-  Hash $sync_dir                         = $::tiny_nas::params::sync_dir,
-  Array $sync_exclude                    = $::tiny_nas::params::sync_exclude,
-  String $csync2_ssl_key                 = $::tiny_nas::params::csync2_ssl_key,
-  String $csync2_ssl_cert                = $::tiny_nas::params::csync2_ssl_cert,
-  String $csync2_preshared_key           = $::tiny_nas::params::csync2_preshared_key,
-  Array $lsyncd_packages                 = $::tiny_nas::params::lsyncd_packages,
-  Array $csync_packages                  = $::tiny_nas::params::csync_packages,
-  Array $nodes_hostnames                 = $::tiny_nas::params::nodes_hostnames,
-  Array $nodes_ip4                       = $::tiny_nas::params::nodes_ip4,
-  Array $nodes_ip6                       = $::tiny_nas::params::nodes_ip6,
-  String $vip_ip4                        = $::tiny_nas::params::vip_ip4,
-  String $vip_ip4_subnet                 = $::tiny_nas::params::vip_ip4_subnet,
-  String $network_interface              = $::tiny_nas::params::network_interface,
-  Optional[String] $vip_ip6              = $::tiny_nas::params::vip_ip6,
-  Optional[String] $vip_ip6_subnet       = $::tiny_nas::params::vip_ip6_subnet,
-  String $nas_root                       = $::tiny_nas::params::nas_root,
-  Optional[Boolean] $manage_lvm          = $::tiny_nas::params::manage_lvm,
-  Optional[Boolean] $manage_firewall     = $::tiny_nas::params::manage_firewall,
-  Optional[Integer[1, default]] $lv_size = $::tiny_nas::params::lv_size,
-  Optional[String] $vg_name              = $::tiny_nas::params::vg_name,
-  Optional[String] $cron_sync_minute     = $::tiny_nas::params::cron_sync_minute,
-  String $nfs_server_config              = $::tiny_nas::params::nfs_server_config
+  Boolean $use_lsyncd                    = $tiny_nas::params::use_lsyncd,
+  String $lsyncd_conf                    = $tiny_nas::params::lsyncd_conf,
+  String $lsyncd_conf_dir                = $tiny_nas::params::lsyncd_conf_dir,
+  Hash $sync_dir                         = $tiny_nas::params::sync_dir,
+  Array $sync_exclude                    = $tiny_nas::params::sync_exclude,
+  String $csync2_ssl_key                 = $tiny_nas::params::csync2_ssl_key,
+  String $csync2_ssl_cert                = $tiny_nas::params::csync2_ssl_cert,
+  String $csync2_preshared_key           = $tiny_nas::params::csync2_preshared_key,
+  Array $lsyncd_packages                 = $tiny_nas::params::lsyncd_packages,
+  Array $csync_packages                  = $tiny_nas::params::csync_packages,
+  Array $nodes_hostnames                 = $tiny_nas::params::nodes_hostnames,
+  Array $nodes_ip4                       = $tiny_nas::params::nodes_ip4,
+  Array $nodes_ip6                       = $tiny_nas::params::nodes_ip6,
+  String $vip_ip4                        = $tiny_nas::params::vip_ip4,
+  String $vip_ip4_subnet                 = $tiny_nas::params::vip_ip4_subnet,
+  String $network_interface              = $tiny_nas::params::network_interface,
+  Optional[String] $vip_ip6              = $tiny_nas::params::vip_ip6,
+  Optional[String] $vip_ip6_subnet       = $tiny_nas::params::vip_ip6_subnet,
+  String $nas_root                       = $tiny_nas::params::nas_root,
+  Optional[Boolean] $manage_lvm          = $tiny_nas::params::manage_lvm,
+  Optional[Boolean] $manage_firewall     = $tiny_nas::params::manage_firewall,
+  Optional[Integer[1, default]] $lv_size = $tiny_nas::params::lv_size,
+  Optional[String] $vg_name              = $tiny_nas::params::vg_name,
+  Optional[String] $cron_sync_minute     = $tiny_nas::params::cron_sync_minute,
+  String $nfs_server_config              = $tiny_nas::params::nfs_server_config,
+  String $keepalived_sysconf_options     = $tiny_nas::params::keepalived_sysconf_options
 
 ) inherits tiny_nas::params {
 
@@ -170,14 +171,15 @@ class tiny_nas (
       lsyncd_conf_dir      => $lsyncd_conf_dir,
       nodes_hostnames      => $nodes_hostnames;
     'tiny_nas::keepalived':
-      network_interface => $network_interface,
-      nodes_hostnames   => $nodes_hostnames,
-      nodes_ip4         => $nodes_ip4,
-      vip_ip4           => $vip_ip4,
-      vip_ip4_subnet    => $vip_ip4_subnet,
-      nodes_ip6         => $nodes_ip6,
-      vip_ip6           => $vip_ip6,
-      vip_ip6_subnet    => $vip_ip6_subnet;
+      network_interface          => $network_interface,
+      nodes_hostnames            => $nodes_hostnames,
+      nodes_ip4                  => $nodes_ip4,
+      vip_ip4                    => $vip_ip4,
+      vip_ip4_subnet             => $vip_ip4_subnet,
+      keepalived_sysconf_options => $keepalived_sysconf_options,
+      nodes_ip6                  => $nodes_ip6,
+      vip_ip6                    => $vip_ip6,
+      vip_ip6_subnet             => $vip_ip6_subnet;
     'tiny_nas::nfs':
       sync_dir => $sync_dir;
   }

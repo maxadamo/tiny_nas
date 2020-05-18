@@ -3,7 +3,7 @@
 #
 class tiny_nas::nfs (
   $sync_dir,
-  $nas_root = $::tiny_nas::params::nas_root,
+  $nas_root = $tiny_nas::params::nas_root,
 ) {
 
   class { '::nfs':

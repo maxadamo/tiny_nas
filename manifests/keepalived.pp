@@ -6,10 +6,11 @@ class tiny_nas::keepalived (
   $nodes_ip4,
   $vip_ip4,
   $vip_ip4_subnet,
+  $keepalived_sysconf_options,
   $nodes_ip6 = [],
   $vip_ip6 = undef,
   $vip_ip6_subnet = undef,
-) inherits tiny_nas::params {
+) {
 
   if ($vip_ip6) and !($vip_ip6_subnet) {
     fail('$vip_ip6 is set but $vip_ip6_subnet is not set')
@@ -18,18 +19,19 @@ class tiny_nas::keepalived (
   }
 
   $keepalived_state = $nodes_ip4[0] ? {
-    $::ipaddress => 'MASTER',
-    default      => 'BACKUP'
+    $facts['ipaddress'] => 'MASTER',
+    default             => 'BACKUP'
   }
   $keepalived_priority = $nodes_ip4[0] ? {
-    $::ipaddress => 100,
-    default      => 50
+    $facts['ipaddress'] => 100,
+    default             => 50
   }
 
   $peer_ip4 = delete($nodes_ip4, $::ipaddress)
   $_peer_host = delete($nodes_hostnames, [$::hostname, $::fqdn])
   $peer_host = regsubst($_peer_host, ".${::domain}", '')
-  include ::keepalived
+
+  class { 'keepalived': sysconf_options => $keepalived_sysconf_options; }
 
   keepalived::vrrp::script { 'check_nfs':
     script   => 'killall -0 nfsd',
