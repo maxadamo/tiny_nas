@@ -53,6 +53,12 @@ class tiny_nas::files (
     file { '/etc/csync2_nasasync.cfg': ensure  => absent; }
   }
 
+    cron { 'ensure_lscynd_status':
+      command => '/etc/keepalived/check-lsyncd.sh',
+      user    => 'root';
+    }
+
+
   file {
     default:
       ensure  => file,
@@ -96,6 +102,10 @@ class tiny_nas::files (
       mode    => '0755',
       require => Class['keepalived'],
       source  => "puppet:///modules/${module_name}/keepalived-up.sh";
+    '/etc/keepalived/check-lsyncd.sh':
+      mode    => '0755',
+      require => Class['keepalived'],
+      source  => "puppet:///modules/${module_name}/check-lsyncd.sh";
     $nfs_server_config:
       source => "puppet:///modules/${module_name}/${nfs_server_config}";
   }
