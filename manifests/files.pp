@@ -53,11 +53,10 @@ class tiny_nas::files (
     file { '/etc/csync2_nasasync.cfg': ensure  => absent; }
   }
 
-    cron { 'ensure_lscynd_status':
-      command => '/etc/keepalived/check-lsyncd.sh',
-      user    => 'root';
-    }
-
+  cron { 'ensure_lscynd_status':
+    command => '/etc/keepalived/check-lsyncd.sh',
+    user    => 'root';
+  }
 
   file {
     default:
