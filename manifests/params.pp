@@ -24,21 +24,21 @@ class tiny_nas::params {
   $csync2_ssl_cert = undef
   $csync2_preshared_key = undef
   $lsyncd_packages = ['lsyncd']
-  $lsyncd_conf = $facts['os']['family'] ? {
+  $lsyncd_conf = $facts['osfamily'] ? {
     'Debian' => 'lsyncd.conf.lua',
     'RedHat' => 'lsyncd.conf'
   }
-  $lsyncd_conf_dir = $facts['os']['family'] ? {
+  $lsyncd_conf_dir = $facts['osfamily'] ? {
     'Debian' => '/etc/lsyncd',
     'RedHat' => '/etc/'
   }
-  $csync_packages = $facts['os']['family'] ? {
+  $csync_packages = $facts['osfamily'] ? {
     'Debian' => ['libsqlite3-0', 'csync2', 'psmisc'],
     'RedHat' => ['sqlite', 'csync2']
   }
   $cron_sync_minute = '*/3'
 
-  $nfs_server_config = $facts['os']['family'] ? {
+  $nfs_server_config = $facts['osfamily'] ? {
     'Debian' => '/etc/default/nfs-kernel-server',
     'RedHat' => '/etc/sysconfig/nfs'
   }

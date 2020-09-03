@@ -122,7 +122,7 @@ class tiny_nas::files (
     }
   }
 
-  if $::osfamily == 'Debian' {
+  if $facts['osfamily'] == 'Debian' {
     file { '/etc/modprobe.d/options.conf': ensure => file; }
     -> file_line { 'modprobe_options':
       ensure  => present,

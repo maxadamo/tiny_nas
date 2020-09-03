@@ -1,4 +1,6 @@
 ---
 ipaddress6: "2a00:1450:400e:808::2004"
 osfamily: "Debian"
+os:
+  family: "Debian" # maybe needed for compatibility with some module
 lsbdistcodename: "xenial"
