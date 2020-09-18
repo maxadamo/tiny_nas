@@ -31,7 +31,8 @@ class tiny_nas::service (
 
   if any2bool($use_lsyncd) == true {
     service { 'lsyncd':
-      enable     => false,
+      ensure     => running,
+      enable     => true,
       hasrestart => true,
       hasstatus  => true,
       require    => Package[$lsyncd_packages];

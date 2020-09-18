@@ -53,7 +53,9 @@ class tiny_nas::files (
     file { '/etc/csync2_nasasync.cfg': ensure  => absent; }
   }
 
+  # removing: we may need to write to slave
   cron { 'ensure_lscynd_status':
+    ensure  => absent,
     command => '/etc/keepalived/check-lsyncd.sh',
     user    => 'root';
   }
@@ -102,9 +104,7 @@ class tiny_nas::files (
       require => Class['keepalived'],
       source  => "puppet:///modules/${module_name}/keepalived-up.sh";
     '/etc/keepalived/check-lsyncd.sh':
-      mode    => '0755',
-      require => Class['keepalived'],
-      source  => "puppet:///modules/${module_name}/check-lsyncd.sh";
+      ensure  => absent;
     $nfs_server_config:
       source => "puppet:///modules/${module_name}/${nfs_server_config}";
   }
